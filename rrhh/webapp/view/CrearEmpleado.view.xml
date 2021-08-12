@@ -1,0 +1,51 @@
+<mvc:View controllerName="proyectofinal.rrhh.controller.CrearEmpleado" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    displayBlock="true" 
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+<NavContainer id="navContainer">
+    <pages>
+        <Page title="{i18n>crearEmpleado}" id="ContentPage">
+            <content>
+                <Wizard id="CrearEmpleadoWizard" class="sapUiResponsivePadding--header sapUiResponsivePadding--content"
+						complete="wizardGuardar">
+                
+                    <WizardStep id="wizardPaso1" title="{i18n>wizardPaso1}" validated="false">
+                        <MessageStrip class="sapUiSmallMarginBottom"
+									  text="{i18n>wizardPaso1Mensaje}"
+									  showIcon="true"/>
+                        <HBox alignItems="Center" justifyContent="Center" width="100%" >
+                            <SegmentedButton width="auto" selectionChange="setTipoEmpleado" selectedItem="" >
+										<items>
+											<SegmentedButtonItem text="{i18n>interno}" width="auto"/>
+											<SegmentedButtonItem text="{i18n>autonomo}" width="auto"/>
+											<SegmentedButtonItem text="{i18n>gerente}" width="auto"/>
+										</items>
+                            </SegmentedButton>
+                        </HBox>
+                    </WizardStep>
+
+                    <WizardStep id="wizardPaso2" title="{i18n>wizardPaso2}" validated="false">
+                        <MessageStrip class="sapUiSmallMarginBottom"
+									  text="{i18n>wizardPaso2Mensaje}"
+									  showIcon="true"/>
+                    </WizardStep>
+
+                    <WizardStep id="wizardPaso3" title="{i18n>wizardPaso3}" validated="false">
+                        <MessageStrip class="sapUiSmallMarginBottom"
+									  text="{i18n>wizardPaso3Mensaje}"
+									  showIcon="true"/>
+                    </WizardStep>
+
+                </Wizard>
+            </content>
+            <footer>
+                <OverflowToolbar>
+                    <ToolbarSpacer/>
+					<Button text="{i18n>cancelar}" press="wizardCancel"/>
+                </OverflowToolbar>
+            </footer>
+        </Page>
+    </pages>
+</NavContainer>
+</mvc:View>

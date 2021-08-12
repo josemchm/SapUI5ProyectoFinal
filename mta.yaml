@@ -1,50 +1,56 @@
-_schema-version: "3.2"
+_schema-version: '3.2'
 ID: proyectofinal
 version: 0.0.1
 modules:
-- name: proyectofinal-approuter
-  type: approuter.nodejs
-  path: proyectofinal-approuter
-  requires:
-  - name: proyectofinal_html_repo_runtime
-  parameters:
-    disk-quota: 256M
-    memory: 256M
-- name: proyectofinal_ui_deployer
-  type: com.sap.application.content
-  path: .
-  requires:
-  - name: proyectofinal_html_repo_host
-    parameters:
-      content-target: true
-  build-parameters:
-    build-result: resources
+  - name: proyectofinal-approuter
+    type: approuter.nodejs
+    path: proyectofinal-approuter
     requires:
-    - artifacts:
-      - rrhh-content.zip
-      name: rrhh
-      target-path: resources/
-- name: rrhh
-  type: html5
-  path: rrhh
-  build-parameters:
-    builder: custom
-    commands:
-    - npm run build
-    supported-platforms: []
+      - name: proyectofinal_html_repo_runtime
+      - name: dest_proyectofinal
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+  - name: proyectofinal_ui_deployer
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: proyectofinal_html_repo_host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: resources
+      requires:
+        - artifacts:
+            - rrhh-content.zip
+          name: rrhh
+          target-path: resources/
+  - name: rrhh
+    type: html5
+    path: rrhh
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      supported-platforms: []
 resources:
-- name: proyectofinal_html_repo_runtime
-  type: org.cloudfoundry.managed-service
-  parameters:
-    service: html5-apps-repo
-    service-plan: app-runtime
-- name: proyectofinal_html_repo_host
-  type: org.cloudfoundry.managed-service
-  parameters:
-    service: html5-apps-repo
-    service-plan: app-host
+  - name: proyectofinal_html_repo_runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-runtime
+  - name: proyectofinal_html_repo_host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-host
+  - name: dest_proyectofinal
+    parameters:
+      service-plan: lite
+      service: destination
+    type: org.cloudfoundry.managed-service
 build-parameters:
   before-all:
-  - builder: custom
-    commands:
-    - npm install
+    - builder: custom
+      commands:
+        - npm install

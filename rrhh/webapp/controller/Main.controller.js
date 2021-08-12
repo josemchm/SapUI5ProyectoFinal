@@ -15,12 +15,15 @@ sap.ui.define([
 
             },
             
-            onCallCrearEmpleado: function(){
-                alert("Creando...");
+            onCallCrearEmpleado: function(oEvent){
+                const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("CrearEmpleado");
             },
 
             onCallVerEmpleados: function(){
-                alert("Listando..");
+                //alert("Listando..");
+                const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("ListarEmpleados");
             },
 
             onCallPedidos: function(oEvent){

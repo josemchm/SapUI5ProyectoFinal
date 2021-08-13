@@ -11,8 +11,8 @@ sap.ui.define([
 		"use strict";
 
 		return Controller.extend("proyectofinal.rrhh.controller.Main", {
-			onInit: function () {
-
+                        
+            onInit: function () {
             },
             
             onCallCrearEmpleado: function(oEvent){

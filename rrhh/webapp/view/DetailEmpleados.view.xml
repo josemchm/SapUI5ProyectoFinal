@@ -2,8 +2,75 @@
             xmlns:mvc="sap.ui.core.mvc" 
             displayBlock="true" 
             xmlns="sap.m"
-            xmlns:core="sap.ui.core">
-<Page title="Detalle">
+            xmlns:core="sap.ui.core"
+            xmlns:f="sap.f">
+<Page id="pageDetailEmpleado" title="{i18n>detalleEmpleado}">
+    <VBox id="boxMensaje" justifyContent="Center" height="100%">
+        <HBox justifyContent="Center" >
+            <Text text="{i18n>mensajeInicial}"/>
+        </HBox>
+    </VBox>
+
+    <Page id="datosEmpleado" visible="false">
+        <ObjectHeader title="{empleadosModel>FirstName} {empleadosModel>LastName}" icon="sap-icon://add-employee" 
+                      intro="{empleadosModel>Dni}"
+                      responsive="true"
+                      backgroundDesign="Translucent"
+		              class="sapUiResponsivePadding--header" >
+            
+                <ObjectAttribute title="{i18n>creationDate}" text="{    path:'empleadosModel>CreationDate',
+                                                                        type: 'sap.ui.model.odata.type.Date'}"/>
+                <ObjectAttribute title="{i18n>type}" text="{empleadosModel>Type}"/>
+
+                <ObjectAttribute title="{i18n>comments}" text="{empleadosModel>Comments}"/>
+                <!-- <statuses>
+                    <ObjectStatus title="{i18n>comments}" text="{empleadosModel>Comments}"/>
+                </statuses> -->
+            
+        </ObjectHeader>
+
+        <IconTabBar class="sapUiResponsiveContentPadding">
+            <items>
+                <IconTabFilter icon="sap-icon://add-employee" design="Horizontal" text="{i18n>ficheros}">
+                    <UploadCollection   id="uploadCollection"
+                                        maximumFilenameLength="55"
+                                        maximumFileSize="10"
+                                        multiple="true"
+                                        sameFilenameAllowed="true"
+                                        instantUpload="true"
+                                        uploadUrl="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments"
+                                        change="onFileChange"
+                                        uploadComplete="onFileUploadComplete"
+                                        beforeUploadStarts="onFileBeforeUpload"
+                                        fileDeleted="onFileDeleted"/>   
+                </IconTabFilter>
+                
+                <IconTabFilter icon="sap-icon://signature" design="Horizontal" text="{i18n>historial}">
+                </IconTabFilter>
+            </items>        
+        </IconTabBar>
+
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                    <Button text="{i18n>darDeBaja}" press="onDarDeBaja" />
+                    <Button text="{i18n>ascender}" press="onAscender" />
+            </Toolbar>
+        </footer>
+
+        <!-- <FlexBox height="65px" alignItems="Center" justifyContent="Center"> -->
+        <!-- <f:Avatar src="sap-icon://add-employee"
+                  displaySize="S"
+                  >
+        CreationDate
+        Type
+        Comments
+        </f:Avatar>
+                <items>
+                    <Text text="{empleadosModel>FirstName} {empleadosModel>LastName}" class="boldText" />
+                 </items>   
+            </FlexBox> -->
+    </Page>
 
 </Page>
 </mvc:View>    

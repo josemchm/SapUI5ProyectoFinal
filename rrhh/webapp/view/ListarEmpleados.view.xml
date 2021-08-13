@@ -8,7 +8,7 @@
     <content>
         <f:FlexibleColumnLayout backgroundDesign="Solid" layout="TwoColumnsMidExpanded">
             <f:beginColumnPages>
-                <mvc:XMLView id="masterEmpleadosView" viewName="proyectofinal.rrhh.view.MasterEmpleados" />
+                <mvc:XMLView id="masterEmpleadosView" viewName="proyectofinal.rrhh.view.MasterEmpleados"/>
             </f:beginColumnPages>
             <f:midColumnPages>
                 <mvc:XMLView id="detailEmpleadosView" viewName="proyectofinal.rrhh.view.DetailEmpleados" />                       

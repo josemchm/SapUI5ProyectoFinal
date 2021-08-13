@@ -3,29 +3,33 @@
             displayBlock="true" 
             xmlns="sap.m"
             xmlns:core="sap.ui.core">
-<Page id="page" title="Master">
-<OverflowToolbar class="sapFDynamicPageAlignContent">
-<Button icon="sap-icon://nav-back" press="onBack"/>
-					<ToolbarSpacer/>
-					<SearchField search=".onSearch" width="17.5rem"/>
-					<!-- <OverflowToolbarButton icon="sap-icon://add" text="Add" type="Transparent" press=".onAdd"/>
-					<OverflowToolbarButton icon="sap-icon://sort" text="Sort" type="Transparent" press=".onSort"/> -->
-				</OverflowToolbar>
-    <!-- <content>
-        <HBox wrap="Wrap">
-            <Label id="labelEmployee" labelFor="inputEmployee" text="{i18n>labelEmployee}" class="sapUiSmallMargin" />
-            <Input id="inputEmployee" value="{jsonCountries>/EmployeeId}" maxLength="6" width="200px" class="sapUiSmallMarginEnd" />
-            <Label id="labelCountry" labelFor="slCountry" text="{i18n>labelCountry}" class="sapUiSmallMargin" visible="true"/>
-            <Select id="slCountry" selectedKey="{jsonCountries>/CountryKey}" items="{jsonCountries>/ListCountry}" forceSelection="false" visible="true">
-                <items>  
-                    <core:Item key="{jsonCountries>Key}" text="{jsonCountries>Text}"/>
-                </items>
-            </Select>
-            <Button id="btnFilter" text="{i18n>btnFilter}" icon="sap-icon://search" press="onFilter" class="sapUiSmallMarginEnd"  />
-            <Button id="btnClear" text="{i18n>btnClear}" icon="sap-icon://clear-filter" press="onClearFilter" class="sapUiSmallMarginEnd"  />
-        </HBox>
-        
-        <core:Fragment fragmentName="logaligroup.Employees.fragment.TableEmployee" type="XML"/>
-    </content> -->
+<Page id="pageMasterEmpleado" showHeader="false">
+    <OverflowToolbar class="sapFDynamicPageAlignContent">
+        <Button icon="sap-icon://nav-back" press="onBack"/>
+        <ToolbarSpacer/>
+        <SearchField search=".onSearch" width="17.5rem" />
+    </OverflowToolbar>
+    <List id="standardList" items="{empleadosModel>/Users}">
+        <items>
+            <StandardListItem title="{empleadosModel>LastName}"
+                              description="{empleadosModel>Dni}" 
+                              type="Navigation" press="showEmpleado"/>
+        </items>
+    </List>
+    <!-- <Table id="tableEmpleados" items="{empleadosModel>/Users}">
+        <columns>
+            <Column visible="false" />
+            <Column visible="false" />
+        </columns>
+        <items>
+            <ColumnListItem type="Navigation" press="showEmpleado">
+                <cells>
+                    <Label text="{empleadosModel>LastName}"/>
+                    <Label text="{empleadosModel>dni}"/>
+                    <core:Icon src="sap-icon://show" press="showOrders"></core:Icon>
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table> -->
 </Page>
 </mvc:View>

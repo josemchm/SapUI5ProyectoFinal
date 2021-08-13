@@ -121,6 +121,13 @@
           "target": [
             "TargetListarEmpleados"
           ]
+        },
+        {
+          "name": "RouteDetalleEmpleado",
+          "pattern": "RouteDetalleEmpleado",
+          "target": [
+            "TargetDetalleEmpleado"
+          ]
         }
       ],
       "targets": {
@@ -144,6 +151,13 @@
           "clearControlAggregation": false,
           "viewId": "ListarEmpleados",
           "viewName": "ListarEmpleados"
+        },
+        "TargetDetalleEmpleado": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "DetailEmpleados",
+          "viewName": "DetailEmpleados"
         }
       }
     }

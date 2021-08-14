@@ -21,7 +21,6 @@ sap.ui.define([
             },
 
             onCallVerEmpleados: function(){
-                //alert("Listando..");
                 const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.navTo("ListarEmpleados");
             },

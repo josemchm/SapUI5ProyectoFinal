@@ -1,0 +1,19 @@
+{
+    "Tipos": [
+        {
+            "Key": "0",
+            "Text": "Interno",
+            "Icon": "sap-icon://employee-pane"
+        },
+        {
+            "Key": "1",
+            "Text": "Autónomo",
+            "Icon": "sap-icon://employee"
+        },
+        {
+            "Key": "2",
+            "Text": "Gerente",
+            "Icon": "sap-icon://leads"
+        }
+    ]
+}

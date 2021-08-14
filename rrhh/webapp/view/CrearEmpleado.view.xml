@@ -2,39 +2,84 @@
     xmlns:mvc="sap.ui.core.mvc" 
     displayBlock="true" 
     xmlns="sap.m"
-    xmlns:core="sap.ui.core">
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form">
 <NavContainer id="navContainer">
     <pages>
         <Page title="{i18n>crearEmpleado}" id="ContentPage">
             <content>
                 <Wizard id="CrearEmpleadoWizard" class="sapUiResponsivePadding--header sapUiResponsivePadding--content"
 						complete="wizardGuardar">
-                
+                    <!-- PASO 1-->
                     <WizardStep id="wizardPaso1" title="{i18n>wizardPaso1}" validated="false">
                         <MessageStrip class="sapUiSmallMarginBottom"
 									  text="{i18n>wizardPaso1Mensaje}"
 									  showIcon="true"/>
-                        <HBox alignItems="Center" justifyContent="Center" width="100%" >
-                            <SegmentedButton width="auto" selectionChange="setTipoEmpleado" selectedItem="" >
-										<items>
-											<SegmentedButtonItem text="{i18n>interno}" width="auto"/>
-											<SegmentedButtonItem text="{i18n>autonomo}" width="auto"/>
-											<SegmentedButtonItem text="{i18n>gerente}" width="auto"/>
-										</items>
+                        <!-- <HBox alignItems="Center" justifyContent="Center" width="100%" > -->
+                        <FlexBox alignItems="Center" justifyContent="Center" height="100px">
+                            <SegmentedButton selectionChange="setTipoEmpleado" selectedItem="">										
+                                        <items>
+                                            <SegmentedButtonItem key="0" text="{i18n>interno}" width="10rem" class="sapUiSmallMarginEnd"/>
+                                            <SegmentedButtonItem key="1" text="{i18n>autonomo}" width="10rem" class="sapUiSmallMarginEnd"/>
+											<SegmentedButtonItem key="2" text="{i18n>gerente}"  width="10rem"/>
+										</items>                                        
                             </SegmentedButton>
-                        </HBox>
+                        </FlexBox>		
                     </WizardStep>
-
-                    <WizardStep id="wizardPaso2" title="{i18n>wizardPaso2}" validated="false">
+                    
+                    <!-- PASO 2-->
+                    <WizardStep id="wizardPaso2" title="{i18n>wizardPaso2}" validated="true">
                         <MessageStrip class="sapUiSmallMarginBottom"
 									  text="{i18n>wizardPaso2Mensaje}"
 									  showIcon="true"/>
-                    </WizardStep>
+                        <form:SimpleForm>
+                            <Label text="{i18n>nombre}" labelFor="inputNombre"/>
+                            <Input id="inputNombre" maxLength="40"/>
 
-                    <WizardStep id="wizardPaso3" title="{i18n>wizardPaso3}" validated="false">
+                            <Label text="{i18n>apellidos}" labelFor="inputApellidos"/>
+                            <Input id="inputApellidos" maxLength="40"/>
+
+                            <Label text="{i18n>dni}" required="true" labelFor="inputDNI"/>
+                            <Input id="inputDNI" maxLength="20" liveChange="validarDNI" valueState="Error"/>
+
+                            <Label text="{i18n>cif}" required="true" labelFor="inputCIF"/>
+                            <Input id="inputCIF" maxLength="20" value="{empleadosModel>Dni}" valueState="Error"/>
+
+                            <Label text="{i18n>salario}"/>
+                            <Slider showAdvancedTooltip="true" min="12000" max="80000" class="sapUiSmallMarginBottom"
+                                    enableTickmarks="true" step="1000"/>
+
+                            <Label text="{i18n>precio}"/>
+                            <Slider showAdvancedTooltip="true" min="100" max="2000" class="sapUiSmallMarginBottom"
+                                    enableTickmarks="true" step="100"/>
+
+                            <Label text="{i18n>fecha}" required="true" labelFor="inputFecha" />
+                            <DatePicker id="inputFecha" valueState="None" change="changeFecha"/>
+                            
+
+                        </form:SimpleForm>
+                    </WizardStep>
+                    
+                    <!-- PASO 3-->
+                    <WizardStep id="wizardPaso3" title="{i18n>wizardPaso3}" validated="true">
                         <MessageStrip class="sapUiSmallMarginBottom"
 									  text="{i18n>wizardPaso3Mensaje}"
 									  showIcon="true"/>
+                        <Text text="{i18n>comentario}" class="sapUiTinyMarginTop"/>
+                        <TextArea   id="textAreaWithBinding2" showExceededText="true" maxLength="200" width="100%" 
+                                    liveChange="handleLiveChange" valueLiveUpdate="true"/>
+                        
+                        <UploadCollection   id="uploadCollection"
+                                        maximumFilenameLength="55"
+                                        maximumFileSize="10"
+                                        multiple="true"
+                                        sameFilenameAllowed="true"
+                                        instantUpload="true"
+                                        uploadUrl="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments"
+                                        change="onFileChange"
+                                        uploadComplete="onFileUploadComplete"
+                                        beforeUploadStarts="onFileBeforeUpload"
+                                        fileDeleted="onFileDeleted"/>  
                     </WizardStep>
 
                 </Wizard>
@@ -44,6 +89,48 @@
                     <ToolbarSpacer/>
 					<Button text="{i18n>cancelar}" press="wizardCancel"/>
                 </OverflowToolbar>
+            </footer>
+        </Page>
+        <Page id="wizardReviewPage" showHeader="false">
+            <content>
+                <form:SimpleForm title="1. Product Type" minWidth="1024" editable="false" layout="ResponsiveGridLayout">
+                    <form:content>
+                        <Label text="Type"/>
+                        <Text id="ProductTypeChosen" text="{/productType}"/>
+                        <Link press="editStepOne" text="Edit" />
+                    </form:content>
+                </form:SimpleForm>
+
+                <form:SimpleForm title="2. Product Information" minWidth="1024" editable="false" layout="ResponsiveGridLayout">
+                    <form:content>
+                        <Label text="Name"/>
+                        <Text id="ProductNameChosen" text="{/productName}"/>
+                        <Label text="Weight"/>
+                        <Text id="ProductWeightChosen" text="{/productWeight}"/>
+                        <Label text="Manufacturer"/>
+                        <Text id="ProductManufacturerChosen" text="{/productManufacturer}"/>
+                        <Label text="Description"/>
+                        <Text id="ProductDescriptionChosen" text="{/productDescription}"/>
+                        <Link press="editStepTwo" text="Edit" />
+                    </form:content>
+                </form:SimpleForm>
+
+                <form:SimpleForm title="3. Coments" minWidth="1024" editable="false" layout="ResponsiveGridLayout">
+                    <form:content>
+                        <Label text="Name"/>
+                        <Text id="ProductNam" text="{/productName}"/>
+                        <Link press="editStepThree" text="Edit" />
+                    </form:content>
+                </form:SimpleForm>
+            </content>
+
+            <footer>
+                <Bar>
+                    <contentRight>
+                        <Button text="Submit" press="handleWizardSubmit"/>
+                        <Button text="Cancel" press="handleWizardCancel"/>
+                    </contentRight>
+                </Bar>
             </footer>
         </Page>
     </pages>

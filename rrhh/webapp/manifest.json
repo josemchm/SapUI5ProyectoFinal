@@ -23,7 +23,11 @@
           "odataVersion": "2.0",
           "localUri": "localService/metadata.xml"
         }
-      }
+      },
+        "jsonTiposEmpleado":{
+            "uri": "model/json/TiposEmpleado.json",
+            "type": "JSON"
+        }
     }
   },
   "sap.ui": {
@@ -81,6 +85,10 @@
           "useBatch": false,
           "defaultUpdateMethod": "Put"
         }
+      },
+      "tiposModel":{
+          "type": "sap.ui.model.json.JSONModel",
+          "dataSource": "jsonTiposEmpleado"
       }
     },
     "resources": {
@@ -140,23 +148,14 @@
         },
         "TargetCrearEmpleado": {
           "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "CrearEmpleado",
           "viewName": "CrearEmpleado"
         },
         "TargetListarEmpleados": {
           "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "ListarEmpleados",
           "viewName": "ListarEmpleados"
         },
         "TargetDetalleEmpleado": {
           "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "DetailEmpleados",
           "viewName": "DetailEmpleados"
         }
       }

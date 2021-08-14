@@ -3,7 +3,8 @@
             displayBlock="true" 
             xmlns="sap.m"
             xmlns:core="sap.ui.core"
-            xmlns:f="sap.f">
+            xmlns:f="sap.f"
+            xmlns:commons="sap.suite.ui.commons">
 <Page id="pageDetailEmpleado" title="{i18n>detalleEmpleado}">
     <VBox id="boxMensaje" justifyContent="Center" height="100%">
         <HBox justifyContent="Center" >
@@ -31,7 +32,7 @@
 
         <IconTabBar class="sapUiResponsiveContentPadding">
             <items>
-                <IconTabFilter icon="sap-icon://add-employee" design="Horizontal" text="{i18n>ficheros}">
+                <IconTabFilter icon="sap-icon://attachment" design="Horizontal" text="{i18n>ficheros}">
                     <UploadCollection   id="uploadCollection"
                                         maximumFilenameLength="55"
                                         maximumFileSize="10"
@@ -45,7 +46,39 @@
                                         fileDeleted="onFileDeleted"/>   
                 </IconTabFilter>
                 
-                <IconTabFilter icon="sap-icon://signature" design="Horizontal" text="{i18n>historial}">
+                <IconTabFilter icon="sap-icon://money-bills" design="Horizontal" text="{i18n>historial}">
+                    <commons:Timeline   id="idTimeLine" 
+                                        enableDoubleSided="true"
+                                        groupByType="Year"
+                                        groupBy="dateTime"
+                                        sortOldestFirst="true"
+                                        showHeaderBar="false"
+                                        showIcons="false">
+                        <commons:content>
+                            <commons:TimelineItem 
+                                        id="idTimelineItem1"
+                                        dateTime="Date(1619136000000)"
+                                        text="Comments"
+                                        userName="24000.00" />
+                            <commons:TimelineItem 
+                                        id="idTimelineItem2"
+                                        dateTime="/Date(1621209600000)/"
+                                        text="Comments2"
+                                        userName="1000.00" />
+                            <commons:TimelineItem 
+                                        id="idTimelineItem3"
+                                        dateTime="/Date(1628812800000)/"
+                                        text="Comments3"
+                                        userName="3000.00" />
+                            
+                        </commons:content>
+                        <!-- <commons:filterList> content="{/Salaries}"
+                            <commons:TimelineFilterListItem 
+                                        id="idTimelineFilterListItem"
+                                        key="FirstName"
+                                        text="FirstName LastName"/>
+                        </commons:filterList> -->
+                    </commons:Timeline>
                 </IconTabFilter>
             </items>        
         </IconTabBar>

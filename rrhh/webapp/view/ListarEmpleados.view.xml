@@ -4,7 +4,7 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:f="sap.f">
-<Page showHeader="false">
+<!-- <Page showHeader="false">
     <content>
         <f:FlexibleColumnLayout backgroundDesign="Solid" layout="TwoColumnsMidExpanded">
             <f:beginColumnPages>
@@ -13,10 +13,17 @@
             <f:midColumnPages>
                 <mvc:XMLView id="detailEmpleadosView" viewName="proyectofinal.rrhh.view.DetailEmpleados" />                       
             </f:midColumnPages>
-            <!-- <f:endColumnPages>
-                <Page></Page>                       
-            </f:endColumnPages> -->
+ 
         </f:FlexibleColumnLayout>
     </content>
-</Page>
+</Page> -->
+<SplitApp>
+    <masterPages>
+        <mvc:XMLView id="masterEmpleadosView" viewName="proyectofinal.rrhh.view.MasterEmpleados"/>
+    </masterPages>
+    <detailPages>
+        <mvc:XMLView id="detailEmpleadosView" viewName="proyectofinal.rrhh.view.DetailEmpleados" /> 
+    </detailPages>
+</SplitApp>
+
 </mvc:View>

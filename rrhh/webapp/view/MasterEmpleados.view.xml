@@ -7,7 +7,7 @@
     <OverflowToolbar class="sapFDynamicPageAlignContent">
         <Button icon="sap-icon://nav-back" press="onBack"/>
         <ToolbarSpacer/>
-        <SearchField search=".onSearch" width="17.5rem" />
+        <SearchField search=".onSearch"  width="auto"/>
     </OverflowToolbar>
     <List id="standardList" items="{empleadosModel>/Users}">
         <items>
@@ -16,8 +16,8 @@
                               type="Navigation" press="showEmpleado"/>
         </items>
     </List>
-    <!-- <Table id="tableEmpleados" items="{empleadosModel>/Users}">
-        <columns>
+    <!-- <Table id="tableEmpleados" items="{empleadosModel>/Users}">  width="17.5rem"
+        <columns> 
             <Column visible="false" />
             <Column visible="false" />
         </columns>

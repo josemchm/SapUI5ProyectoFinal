@@ -4,26 +4,35 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:form="sap.ui.layout.form">
-<NavContainer id="navContainer">
+<Page title="{i18n>crearEmpleado}"> 
+<NavContainer id="NavContainer" >
     <pages>
-        <Page title="{i18n>crearEmpleado}" id="ContentPage">
+        <Page id="ContentPage" showHeader="false">
             <content>
                 <Wizard id="CrearEmpleadoWizard" class="sapUiResponsivePadding--header sapUiResponsivePadding--content"
-						complete="wizardGuardar">
+						complete="wizardComplete">
                     <!-- PASO 1-->
-                    <WizardStep id="wizardPaso1" title="{i18n>wizardPaso1}" validated="false">
+                    <WizardStep id="wizardPaso1" title="{i18n>wizardPaso1}" validated="false" >
                         <MessageStrip class="sapUiSmallMarginBottom"
 									  text="{i18n>wizardPaso1Mensaje}"
 									  showIcon="true"/>
                         <!-- <HBox alignItems="Center" justifyContent="Center" width="100%" > -->
                         <FlexBox alignItems="Center" justifyContent="Center" height="100px">
-                            <SegmentedButton selectionChange="setTipoEmpleado" selectedItem="">										
+                            <!-- <SegmentedButton selectionChange="setTipoEmpleado" selectedItem="" selectedKey="{nuevoEmpleadoModel>/Type}">										
                                         <items>
                                             <SegmentedButtonItem key="0" text="{i18n>interno}" width="10rem" class="sapUiSmallMarginEnd"/>
                                             <SegmentedButtonItem key="1" text="{i18n>autonomo}" width="10rem" class="sapUiSmallMarginEnd"/>
 											<SegmentedButtonItem key="2" text="{i18n>gerente}"  width="10rem"/>
 										</items>                                        
+                            </SegmentedButton> -->
+
+                            <SegmentedButton selectionChange="setTipoEmpleado" selectedItem="{nuevoEmpleadoModel>/Type}" 
+                                             items="{tiposModel>/Tipos}" selectedKey="{nuevoEmpleadoModel>/Type}">										
+                                        <items>
+                                            <SegmentedButtonItem key="{tiposModel>Key}" text="{tiposModel>Text}" width="10rem" class="sapUiSmallMarginEnd"/>
+										</items>                                        
                             </SegmentedButton>
+
                         </FlexBox>		
                     </WizardStep>
                     
@@ -40,7 +49,7 @@
                             <Input id="inputApellidos" maxLength="40"/>
 
                             <Label text="{i18n>dni}" required="true" labelFor="inputDNI"/>
-                            <Input id="inputDNI" maxLength="20" liveChange="validarDNI" valueState="Error"/>
+                            <Input id="inputDNI" maxLength="20" liveChange="validarDNI" valueState="Error" value="{nuevoEmpleadoModel>/Dni}"/>
 
                             <Label text="{i18n>cif}" required="true" labelFor="inputCIF"/>
                             <Input id="inputCIF" maxLength="20" value="{empleadosModel>Dni}" valueState="Error"/>
@@ -54,7 +63,7 @@
                                     enableTickmarks="true" step="100"/>
 
                             <Label text="{i18n>fecha}" required="true" labelFor="inputFecha" />
-                            <DatePicker id="inputFecha" valueState="None" change="changeFecha"/>
+                            <DatePicker id="inputFecha" valueState="None" change="changeFecha" value="{nuevoEmpleadoModel>/CreationDate}"/>
                             
 
                         </form:SimpleForm>
@@ -91,35 +100,49 @@
                 </OverflowToolbar>
             </footer>
         </Page>
+        <!-- REVIEW-->
         <Page id="wizardReviewPage" showHeader="false">
             <content>
-                <form:SimpleForm title="1. Product Type" minWidth="1024" editable="false" layout="ResponsiveGridLayout">
+                <form:SimpleForm title="{i18n>wizardPaso1}" minWidth="1024" editable="false" layout="ResponsiveGridLayout">
                     <form:content>
-                        <Label text="Type"/>
-                        <Text id="ProductTypeChosen" text="{/productType}"/>
-                        <Link press="editStepOne" text="Edit" />
+                        <Label text="{i18n>tipo}"/>
+                        <Text id="ProductTypeChosen" text="{nuevoEmpleadoModel>/Type}"/>
+                        <Link press="editPaso1" text="Edit" />
                     </form:content>
                 </form:SimpleForm>
 
-                <form:SimpleForm title="2. Product Information" minWidth="1024" editable="false" layout="ResponsiveGridLayout">
+                <form:SimpleForm title="{i18n>wizardPaso2}" minWidth="1024" editable="false" layout="ResponsiveGridLayout">
                     <form:content>
-                        <Label text="Name"/>
-                        <Text id="ProductNameChosen" text="{/productName}"/>
-                        <Label text="Weight"/>
-                        <Text id="ProductWeightChosen" text="{/productWeight}"/>
-                        <Label text="Manufacturer"/>
-                        <Text id="ProductManufacturerChosen" text="{/productManufacturer}"/>
-                        <Label text="Description"/>
-                        <Text id="ProductDescriptionChosen" text="{/productDescription}"/>
-                        <Link press="editStepTwo" text="Edit" />
+                        <Label text="{i18n>nombre}"/>
+                        <Text id="NombreReview" text="{/productName}"/>
+                        <Label text="{i18n>apellidos}"/>
+                        <Text id="ApellidosReview" text="{/productWeight}"/>
+                        <Label text="{i18n>dni}"/>
+                        <Text id="dniReview" text="{nuevoEmpleadoModel>/Dni}"/>
+                        <Label text="{i18n>cif}"/>
+                        <Text id="cifReview" text="{/productManufacturer}"/>
+                        <Label text="{i18n>salario}"/>
+                        <Text id="salarioReview" text="{/productDescription}"/>
+                        <Label text="{i18n>precio}"/>
+                        <Text id="precioReview" text="{nuevoEmpleadoModel>/CreationDate}"/>
+                        <Label text="{i18n>fecha}"/>
+                        <Text id="fechaReview" text="{/productDescription}"/>
+                        <Link press="editPaso2" text="Edit" />
                     </form:content>
                 </form:SimpleForm>
 
-                <form:SimpleForm title="3. Coments" minWidth="1024" editable="false" layout="ResponsiveGridLayout">
+                <form:SimpleForm title="{i18n>wizardPaso3}" minWidth="1024" editable="false" layout="ResponsiveGridLayout">
                     <form:content>
-                        <Label text="Name"/>
+                        <Label text="{i18n>comentario}"/>
                         <Text id="ProductNam" text="{/productName}"/>
-                        <Link press="editStepThree" text="Edit" />
+                        <Label text="{i18n>documentos}"/>
+                        <UploadCollection   id="UploadCollectionReview"
+                                            uploadEnabled="false"
+                                            uploadButtonInvisible="true"
+                                            multiple="true"
+                                            instantUpload="false"
+                                            />
+                        <Link press="editPaso3" text="Edit" />
                     </form:content>
                 </form:SimpleForm>
             </content>
@@ -128,11 +151,12 @@
                 <Bar>
                     <contentRight>
                         <Button text="Submit" press="handleWizardSubmit"/>
-                        <Button text="Cancel" press="handleWizardCancel"/>
+                        <Button text="Cancel" press="wizardCancel"/>
                     </contentRight>
                 </Bar>
             </footer>
         </Page>
     </pages>
 </NavContainer>
+</Page>   
 </mvc:View>

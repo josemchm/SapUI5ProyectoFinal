@@ -12,7 +12,7 @@
                 <Wizard id="CrearEmpleadoWizard" class="sapUiResponsivePadding--header sapUiResponsivePadding--content"
 						complete="wizardComplete">
                     <!-- PASO 1-->
-                    <WizardStep id="wizardPaso1" title="{i18n>wizardPaso1}" validated="false" >
+                    <WizardStep id="wizardPaso1" title="{i18n>wizardPaso1}" validated="false">
                         <MessageStrip class="sapUiSmallMarginBottom"
 									  text="{i18n>wizardPaso1Mensaje}"
 									  showIcon="true"/>
@@ -23,11 +23,11 @@
                                             <SegmentedButtonItem key="0" text="{i18n>interno}" width="10rem" class="sapUiSmallMarginEnd"/>
                                             <SegmentedButtonItem key="1" text="{i18n>autonomo}" width="10rem" class="sapUiSmallMarginEnd"/>
 											<SegmentedButtonItem key="2" text="{i18n>gerente}"  width="10rem"/>
-										</items>                                        
-                            </SegmentedButton> -->
+										</items>   selectedItem="{nuevoEmpleadoModel>/Type}"                                       
+                            </SegmentedButton> --> 
 
-                            <SegmentedButton selectionChange="setTipoEmpleado" selectedItem="{nuevoEmpleadoModel>/Type}" 
-                                             items="{tiposModel>/Tipos}" selectedKey="{nuevoEmpleadoModel>/Type}">										
+                            <SegmentedButton id="tipoButton" selectionChange="setTipoEmpleado" selectedItem=""
+                                             items="{tiposModel>/Tipos}" selectedKey="{nuevoEmpleadoModel>/Type}" >										
                                         <items>
                                             <SegmentedButtonItem key="{tiposModel>Key}" text="{tiposModel>Text}" width="10rem" class="sapUiSmallMarginEnd"/>
 										</items>                                        
@@ -37,33 +37,33 @@
                     </WizardStep>
                     
                     <!-- PASO 2-->
-                    <WizardStep id="wizardPaso2" title="{i18n>wizardPaso2}" validated="true">
+                    <WizardStep id="wizardPaso2" title="{i18n>wizardPaso2}" validated="false" activate="ValidarPaso2">
                         <MessageStrip class="sapUiSmallMarginBottom"
 									  text="{i18n>wizardPaso2Mensaje}"
 									  showIcon="true"/>
                         <form:SimpleForm>
-                            <Label text="{i18n>nombre}" labelFor="inputNombre"/>
-                            <Input id="inputNombre" maxLength="40"/>
+                            <Label text="{i18n>nombre}" required="true" labelFor="inputNombre"/>
+                            <Input id="inputNombre" maxLength="40" value="{nuevoEmpleadoModel>/FirstName}" valueState="Error" liveChange="ValidarPaso2"/>
+                            
+                            <Label text="{i18n>apellidos}" required="true" labelFor="inputApellidos"/>
+                            <Input id="inputApellidos" maxLength="40" value="{nuevoEmpleadoModel>/LastName}" valueState="Error" liveChange="ValidarPaso2"/>
 
-                            <Label text="{i18n>apellidos}" labelFor="inputApellidos"/>
-                            <Input id="inputApellidos" maxLength="40"/>
+                            <Label id="inputDNITxt" text="{i18n>dni}" required="true" labelFor="inputDNI"/>
+                            <Input id="inputDNI" maxLength="20" value="{nuevoEmpleadoModel>/Dni}" valueState="Error" liveChange="ValidarPaso2"/>
 
-                            <Label text="{i18n>dni}" required="true" labelFor="inputDNI"/>
-                            <Input id="inputDNI" maxLength="20" liveChange="validarDNI" valueState="Error" value="{nuevoEmpleadoModel>/Dni}"/>
+                            <!-- <Label text="{i18n>cif}" required="true" labelFor="inputCIF"/>
+                            <Input id="inputCIF" maxLength="20" value="{nuevoEmpleadoModel>/Dni}" valueState="Error" liveChange="ValidarPaso2"/> -->
 
-                            <Label text="{i18n>cif}" required="true" labelFor="inputCIF"/>
-                            <Input id="inputCIF" maxLength="20" value="{empleadosModel>Dni}" valueState="Error"/>
+                            <Label id="inputSalarioTxt" text="{i18n>salario}" labelFor="inputSalario"/>
+                            <Slider id="inputSalario" showAdvancedTooltip="true" min="12000" max="80000" class="sapUiSmallMarginBottom"
+                                    enableTickmarks="true" step="1000" value="{nuevoEmpleadoModel>/Amount}"/>
 
-                            <Label text="{i18n>salario}"/>
-                            <Slider showAdvancedTooltip="true" min="12000" max="80000" class="sapUiSmallMarginBottom"
-                                    enableTickmarks="true" step="1000"/>
-
-                            <Label text="{i18n>precio}"/>
-                            <Slider showAdvancedTooltip="true" min="100" max="2000" class="sapUiSmallMarginBottom"
-                                    enableTickmarks="true" step="100"/>
+                            <!-- <Label id="inputPrecioTxt" text="{i18n>precio}" labelFor="inputPrecio" />
+                            <Slider id="inputPrecio" showAdvancedTooltip="true" min="100" max="2000" class="sapUiSmallMarginBottom"
+                                    enableTickmarks="true" step="100" value="{nuevoEmpleadoModel>/Amount}" visible="false"/> -->
 
                             <Label text="{i18n>fecha}" required="true" labelFor="inputFecha" />
-                            <DatePicker id="inputFecha" valueState="None" change="changeFecha" value="{nuevoEmpleadoModel>/CreationDate}"/>
+                            <DatePicker id="inputFecha" value="{nuevoEmpleadoModel>/CreationDate}" valueState="Error" change="ValidarPaso2"/>
                             
 
                         </form:SimpleForm>
@@ -96,53 +96,56 @@
             <footer>
                 <OverflowToolbar>
                     <ToolbarSpacer/>
-					<Button text="{i18n>cancelar}" press="wizardCancel"/>
+					<Button text="{i18n>cancelar}" press="crearCancel"/>
                 </OverflowToolbar>
             </footer>
         </Page>
         <!-- REVIEW-->
         <Page id="wizardReviewPage" showHeader="false">
             <content>
-                <form:SimpleForm title="{i18n>wizardPaso1}" minWidth="1024" editable="false" layout="ResponsiveGridLayout">
+                <form:SimpleForm title="{i18n>reviewPaso1}" minWidth="1024" editable="false" layout="ResponsiveGridLayout">
                     <form:content>
                         <Label text="{i18n>tipo}"/>
-                        <Text id="ProductTypeChosen" text="{nuevoEmpleadoModel>/Type}"/>
-                        <Link press="editPaso1" text="Edit" />
+                        <Text id="tipoReview" text="{nuevoEmpleadoModel>/TypeTxt}"/>
+
+                        <Link press="editPaso1" text="{i18n>reviewEditar}" />
                     </form:content>
                 </form:SimpleForm>
 
-                <form:SimpleForm title="{i18n>wizardPaso2}" minWidth="1024" editable="false" layout="ResponsiveGridLayout">
+                <form:SimpleForm title="{i18n>reviewPaso2}" minWidth="1024" editable="false" layout="ResponsiveGridLayout">
                     <form:content>
-                        <Label text="{i18n>nombre}"/>
-                        <Text id="NombreReview" text="{/productName}"/>
-                        <Label text="{i18n>apellidos}"/>
-                        <Text id="ApellidosReview" text="{/productWeight}"/>
-                        <Label text="{i18n>dni}"/>
+                        <Label text="{i18n>nombre}" labelFor="NombreReview"/>
+                        <Text id="nombreReview" text="{nuevoEmpleadoModel>/FirstName}"/>
+                        <Label text="{i18n>apellidos}" labelFor="ApellidosReview"/>
+                        <Text id="apellidosReview" text="{nuevoEmpleadoModel>/LastName}"/>
+                        <Label id="dniReviewTxt" text="{i18n>dni}" labelFor="dniReview"/>
                         <Text id="dniReview" text="{nuevoEmpleadoModel>/Dni}"/>
-                        <Label text="{i18n>cif}"/>
-                        <Text id="cifReview" text="{/productManufacturer}"/>
-                        <Label text="{i18n>salario}"/>
-                        <Text id="salarioReview" text="{/productDescription}"/>
-                        <Label text="{i18n>precio}"/>
-                        <Text id="precioReview" text="{nuevoEmpleadoModel>/CreationDate}"/>
-                        <Label text="{i18n>fecha}"/>
-                        <Text id="fechaReview" text="{/productDescription}"/>
-                        <Link press="editPaso2" text="Edit" />
+                        <!-- <Label text="{i18n>cif}" labelFor="cifReview"/>
+                        <Text id="cifReview" text="{/Dni}"/>-->
+                        <Label id="salarioReviewTxt" text="{i18n>salario}" labelFor="salarioReview"/> 
+                        <Text id="salarioReview" text="{nuevoEmpleadoModel>/Amount}"/>
+                        <!-- <Label text="{i18n>precio}" labelFor="precioReview"/>
+                        <Text id="precioReview" text="{nuevoEmpleadoModel>/Amount}"/> -->
+                        <Label text="{i18n>fecha}" labelFor="fechaReview"/>
+                        <Text id="fechaReview" text="{nuevoEmpleadoModel>/CreationDate}"/>
+
+                        <Link press="editPaso2" text="{i18n>reviewEditar}" />
                     </form:content>
                 </form:SimpleForm>
 
-                <form:SimpleForm title="{i18n>wizardPaso3}" minWidth="1024" editable="false" layout="ResponsiveGridLayout">
+                <form:SimpleForm title="{i18n>reviewPaso3}" minWidth="1024" editable="false" layout="ResponsiveGridLayout">
                     <form:content>
                         <Label text="{i18n>comentario}"/>
-                        <Text id="ProductNam" text="{/productName}"/>
+                        <Text id="comentarioReview" text="{nuevoEmpleadoModel>/Comments}"/>
                         <Label text="{i18n>documentos}"/>
-                        <UploadCollection   id="UploadCollectionReview"
+                        <UploadCollection   id="uploadCollectionReview"
                                             uploadEnabled="false"
                                             uploadButtonInvisible="true"
                                             multiple="true"
                                             instantUpload="false"
                                             />
-                        <Link press="editPaso3" text="Edit" />
+
+                        <Link press="editPaso3" text="{i18n>reviewEditar}" />
                     </form:content>
                 </form:SimpleForm>
             </content>
@@ -150,8 +153,8 @@
             <footer>
                 <Bar>
                     <contentRight>
-                        <Button text="Submit" press="handleWizardSubmit"/>
-                        <Button text="Cancel" press="wizardCancel"/>
+                        <Button text="{i18n>wizardGuardar}" press="wizardSubmit"/>
+                        <Button text="{i18n>cancelar}" press="wizardCancel"/>
                     </contentRight>
                 </Bar>
             </footer>

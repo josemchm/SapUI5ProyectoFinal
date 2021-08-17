@@ -1,10 +1,13 @@
 {
     "EmployeeId": "",
-    "SapId": "",
+    "SapId": "jchoque@gmail.com",
     "Type": "",
     "FirstName": "",
     "LastName": "",
     "Dni": "",
     "CreationDate": "",
-    "Comments": ""
+    "Comments": "",
+    "Amount":"",
+    "Waers":"EUR",
+    "TypeTxt":""
 }

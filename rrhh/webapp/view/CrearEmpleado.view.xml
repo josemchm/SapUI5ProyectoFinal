@@ -78,18 +78,18 @@
                         <Text text="{i18n>comentario}" class="sapUiTinyMarginTop"/>
                         <TextArea   id="textAreaWithBinding2" showExceededText="true" maxLength="200" width="100%" 
                                     liveChange="handleLiveChange" valueLiveUpdate="true" value="{nuevoEmpleadoModel>/Comments}"/>
-                        
+                        <!-- uploadUrl="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments" -->
                         <UploadCollection   id="uploadCollection"
                                         maximumFilenameLength="55"
                                         maximumFileSize="10"
                                         multiple="true"
                                         sameFilenameAllowed="true"
-                                        instantUpload="true"
-                                        uploadUrl="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments"
+                                        instantUpload="false"
                                         change="onFileChange"
                                         uploadComplete="onFileUploadComplete"
                                         beforeUploadStarts="onFileBeforeUpload"
-                                        fileDeleted="onFileDeleted"/>  
+                                        fileDeleted="onFileDeleted"
+                                        uploadUrl="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments"/>  
                     </WizardStep>
 
                 </Wizard>
@@ -150,6 +150,7 @@
                                             uploadButtonInvisible="true"
                                             multiple="true"
                                             instantUpload="false"
+                                            
                                             />
 
                         <Link press="editPaso3" text="{i18n>reviewEditar}" />

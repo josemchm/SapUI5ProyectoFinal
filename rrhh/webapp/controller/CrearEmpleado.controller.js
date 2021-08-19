@@ -4,14 +4,16 @@ sap.ui.define([
     'sap/ui/core/library',
     "sap/m/MessageBox",
     "sap/ui/core/routing/History",
+    "sap/ui/core/format/NumberFormat"
 ],
 	/**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      * @param {typeof sap.ui.core.Library} Library
      * @param {typeof sap.m.MessageBox} MessageBox
      * @param {typeof sap.ui.core.routing.History} History
+     * @param {typeof sap.ui.core.format.NumberFormat} NumberFormat
      */
-    function (Controller, Library, MessageBox, History) {
+    function (Controller, Library, MessageBox, History, NumberFormat) {
         "use strict";
 
         return Controller.extend("proyectofinal.rrhh.controller.CrearEmpleado", {
@@ -100,6 +102,12 @@ sap.ui.define([
                 // var tipoEmpleado2 = this.oJSONModelNuevo.getProperty("/Type");
                 // console.log("EMPLEADO2->" + tipoEmpleado2);
 
+                var oUploadCollection = this.getView().byId("uploadCollection");
+
+                oUploadCollection.removeAllItems();
+                oUploadCollection.destroyItems();
+
+
                 this._wizard.invalidateStep(this.getView().byId("wizardPaso1"));
 
 
@@ -128,6 +136,22 @@ sap.ui.define([
             wizardComplete: function () {
                 //this._oNavContainer = this.byId("navContainer");
                 this._oNavContainer.to(this.byId("wizardReviewPage"));
+
+                //mostrar adjuntos en preview
+                var oReviewCollection = this.getView().byId("uploadCollectionReview");
+                var oUploadCollection = this.getView().byId("uploadCollection");
+
+                oReviewCollection.removeAllItems();
+                oReviewCollection.destroyItems();
+
+                //var items = oUploadCollection.getItems().length;
+                for (let i = 0; i < oUploadCollection.getItems().length; i++) {
+                    var item = new sap.m.UploadCollectionItem();
+                    //var item = oUploadCollection.getItems()[i];
+                    item.setFileName(oUploadCollection.getItems()[i].getFileName());
+                    item.setVisibleDelete(false);
+                    oReviewCollection.addItem(item);
+                }
             },
 
 
@@ -386,29 +410,127 @@ sap.ui.define([
                     //EmployeeId: "",
                     SapId: this.getOwnerComponent().SapId,
                     Type: this.oJSONModelNuevo.getProperty("/Type").toString(),
-                    FirstName: "NOMBRE", //this.oJSONModelNuevo.getProperty("/FirstName").toString(),
-                    LastName: "APELLIDO", //this.oJSONModelNuevo.getProperty("/LastName").toString(),
-                    Dni: "12097081R",//this.oJSONModelNuevo.getProperty("/Dni").toString(),
+                    FirstName: this.oJSONModelNuevo.getProperty("/FirstName").toString(),
+                    LastName: this.oJSONModelNuevo.getProperty("/LastName").toString(),
+                    Dni: this.oJSONModelNuevo.getProperty("/Dni").toString(),
                     CreationDate: this.oJSONModelNuevo.getProperty("/CreationDate"),
-                    Comments: this.oJSONModelNuevo.getProperty("/Comments").toString()   
+                    Comments: this.oJSONModelNuevo.getProperty("/Comments").toString() 
                 };
                 console.log(body);
 
-                oODataModel.create("/Users", body, {
+                // oODataModel.create("/Users", body, {
+                //         success: function (data) {
+                //             console.log(data);
+                //             MessageBox.success(oResourceBundle.getText("saveOK"));
+                //             //this.onReadODataIncidence.bind(this)(employeeId);
+                //             //sap.m.MessageToast.show(oResouceBundle.getText("odataSaveOK"));
+                //             //MessageBox.success(oResouceBundle.getText("saveNoOK")); 
+                //         }.bind(this),
+                //         error: function (e) {
+                //             console.log(e);
+                //             MessageBox.error(oResourceBundle.getText("saveNoOK"));
+                //             //sap.m.MessageToast.show(oResouceBundle.getText("odataSaveKO"));
+                //         }.bind(this)
+                // });
+
+                //this._guardarSalario("000");
+                this.oJSONModelNuevo.setProperty("/EmployeeId","000")
+                this._guardarAdjuntos("000");
+            },
+
+            _guardarSalario: function(EmployeeId){
+
+                var oODataModel = this.getOwnerComponent().getModel("empleadosModel");
+
+                var oFormatOption = {
+                    minIntegerDigits: 1,
+                    maxIntegerDigits: 17,
+                    minFractionDigits: 2,
+                    maxFractionDigits: 2,
+                    groupingEnabled: false,
+                    decimalSeparator: "."
+                    };
+                //var NumberFormat = new sap.ui.core.format.NumberFormat();
+                var oFloat = NumberFormat.getFloatInstance(oFormatOption); 
+                
+                var salario = oFloat.format(this.oJSONModelNuevo.getProperty("/Amount"));
+                //var oFloat = NumberFormat.getCurrencyInstance({currencyCode: false}); 
+                //var salario = oFloat.format(this.oJSONModelNuevo.getProperty("/Amount"),"EUR"); 
+
+                //var salario = NumberFormat.format(this.oJSONModelNuevo.getProperty("/Amount"));
+
+                var bodySalario = {
+                    SapId: this.getOwnerComponent().SapId,
+                    EmployeeId: "000",
+                    CreationDate: this.oJSONModelNuevo.getProperty("/CreationDate"),
+                    Ammount: salario,
+                    Waers: "EUR",
+                    Comments: this.oJSONModelNuevo.getProperty("/Comments").toString() 
+                };
+                console.log(bodySalario);
+                oODataModel.create("/Salaries", bodySalario, {
                         success: function () {
-                            console.log(data);
-                            MessageBox.success(oResourceBundle.getText("saveOK"));
-                            //this.onReadODataIncidence.bind(this)(employeeId);
-                            //sap.m.MessageToast.show(oResouceBundle.getText("odataSaveOK"));
-                            //MessageBox.success(oResouceBundle.getText("saveNoOK")); 
+                            console.log("SalarioOK");
+                            //MessageBox.success(oResourceBundle.getText("saveOK"));
                         }.bind(this),
-                        error: function (e) {
-                            console.log(e);
-                            MessageBox.error(oResourceBundle.getText("saveNoOK"));
-                            //sap.m.MessageToast.show(oResouceBundle.getText("odataSaveKO"));
+                        error: function () {
+                            console.log("SalarioNOOK");
+                            //console.log(e2);
+                            //MessageBox.error(oResourceBundle.getText("saveNoOK"));
                         }.bind(this)
-                    });
-            }
+                });
+            },
+
+            _guardarAdjuntos: function(EmployeeId){
+                var oUploadCollection = this.getView().byId("uploadCollection");
+                //var oTextArea = this.byId("TextArea");
+                var cFiles = oUploadCollection.getItems().length;
+                var uploadInfo = cFiles + " file(s)";
+
+                if (cFiles > 0) {
+                    oUploadCollection.upload();
+
+                    // if (oTextArea.getValue().length === 0) {
+                    //     uploadInfo = uploadInfo + " without notes";
+                    // } else {
+                    //     uploadInfo = uploadInfo + " with notes";
+                    // }
+
+                    // MessageToast.show("Method Upload is called (" + uploadInfo + ")");
+                    // MessageBox.information("Uploaded " + uploadInfo);
+                    // oTextArea.setValue("");
+                }
+            },
+
+            onFileChange: function (oEvent) {
+                let oUploadCollection = oEvent.getSource();
+
+                //Header Token CSRF
+                let oCustomerHeaderToken = new sap.m.UploadCollectionParameter({
+                    name: "x-csrf-token",
+                    value: this.getView().getModel("empleadosModel").getSecurityToken()
+                });
+                oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
+            },
+
+            onFileBeforeUpload: function (oEvent) {
+
+                let fileName = oEvent.getParameter("fileName");
+                //let objContext = this.oJSONModelNuevo.getData(); 
+                //oEvent.getSource().getBindingContext("empleadosModel").getObject();
+                let oCustomerHeaderSlug = new sap.m.UploadCollectionParameter({
+                    name: "slug",
+                    value: this.getOwnerComponent().SapId + ";"
+                            + this.oJSONModelNuevo.getProperty("/EmployeeId").toString() + ";"
+                            + fileName
+                });
+                oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
+            },
+
+            onFileUploadComplete: function (oEvent) {
+                //oEvent.getSource().getBinding("items").refresh();                
+            },
+
 
         });
     });

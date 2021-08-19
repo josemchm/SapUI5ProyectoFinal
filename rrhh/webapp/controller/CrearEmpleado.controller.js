@@ -418,24 +418,28 @@ sap.ui.define([
                 };
                 console.log(body);
 
-                // oODataModel.create("/Users", body, {
-                //         success: function (data) {
-                //             console.log(data);
-                //             MessageBox.success(oResourceBundle.getText("saveOK"));
-                //             //this.onReadODataIncidence.bind(this)(employeeId);
-                //             //sap.m.MessageToast.show(oResouceBundle.getText("odataSaveOK"));
-                //             //MessageBox.success(oResouceBundle.getText("saveNoOK")); 
-                //         }.bind(this),
-                //         error: function (e) {
-                //             console.log(e);
-                //             MessageBox.error(oResourceBundle.getText("saveNoOK"));
-                //             //sap.m.MessageToast.show(oResouceBundle.getText("odataSaveKO"));
-                //         }.bind(this)
-                // });
+                oODataModel.create("/Users", body, {
+                        success: function (data) {
+                            console.log(data);
+                            MessageBox.success(oResourceBundle.getText("saveOK"));
 
-                //this._guardarSalario("000");
-                this.oJSONModelNuevo.setProperty("/EmployeeId","000")
-                this._guardarAdjuntos("000");
+                            //enviando provisionalmente id 000
+                            this._guardarSalario("000");
+                            this.oJSONModelNuevo.setProperty("/EmployeeId","000")
+                            this._guardarAdjuntos("000");
+
+                            //this.onReadODataIncidence.bind(this)(employeeId);
+                            //sap.m.MessageToast.show(oResouceBundle.getText("odataSaveOK"));
+                            //MessageBox.success(oResouceBundle.getText("saveNoOK")); 
+                        }.bind(this),
+                        error: function (e) {
+                            console.log(e);
+                            MessageBox.error(oResourceBundle.getText("saveNoOK"));
+                            //sap.m.MessageToast.show(oResouceBundle.getText("odataSaveKO"));
+                        }.bind(this)
+                });
+
+                
             },
 
             _guardarSalario: function(EmployeeId){

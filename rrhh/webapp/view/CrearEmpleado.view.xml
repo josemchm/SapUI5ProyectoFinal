@@ -63,8 +63,9 @@
                                     enableTickmarks="true" step="100" value="{nuevoEmpleadoModel>/Amount}" visible="false"/> -->
 
                             <Label text="{i18n>fecha}" required="true" labelFor="inputFecha" />
-                            <DatePicker id="inputFecha" value="{nuevoEmpleadoModel>/CreationDate}" valueState="Error" change="ValidarPaso2"/>
-                            
+                            <DatePicker id="inputFecha" dateValue="{nuevoEmpleadoModel>/CreationDate}" 
+                                        valueState="Error" change="ValidarPaso2"/>
+                            <!-- <DatePicker id="inputFecha2" dateValue="{empleadosModel>/CreationDate}"/> -->
 
                         </form:SimpleForm>
                     </WizardStep>
@@ -76,7 +77,7 @@
 									  showIcon="true"/>
                         <Text text="{i18n>comentario}" class="sapUiTinyMarginTop"/>
                         <TextArea   id="textAreaWithBinding2" showExceededText="true" maxLength="200" width="100%" 
-                                    liveChange="handleLiveChange" valueLiveUpdate="true"/>
+                                    liveChange="handleLiveChange" valueLiveUpdate="true" value="{nuevoEmpleadoModel>/Comments}"/>
                         
                         <UploadCollection   id="uploadCollection"
                                         maximumFilenameLength="55"
@@ -127,7 +128,13 @@
                         <!-- <Label text="{i18n>precio}" labelFor="precioReview"/>
                         <Text id="precioReview" text="{nuevoEmpleadoModel>/Amount}"/> -->
                         <Label text="{i18n>fecha}" labelFor="fechaReview"/>
-                        <Text id="fechaReview" text="{nuevoEmpleadoModel>/CreationDate}"/>
+                        <Text id="fechaReview" text="{  path: 'nuevoEmpleadoModel>/CreationDate', 
+                                                        type: 'sap.ui.model.type.DateTime', 
+                                                        formatOptions: { 
+                                                                            pattern: 'dd MMM yyyy'
+                                                                        } 
+                                                    }"/>
+                        <!-- <Text id="fechaReview" text="{nuevoEmpleadoModel>/CreationDate}" /> -->
 
                         <Link press="editPaso2" text="{i18n>reviewEditar}" />
                     </form:content>
@@ -153,7 +160,7 @@
             <footer>
                 <Bar>
                     <contentRight>
-                        <Button text="{i18n>wizardGuardar}" press="wizardSubmit"/>
+                        <Button text="{i18n>guardar}" press="wizardGuardar"/>
                         <Button text="{i18n>cancelar}" press="wizardCancel"/>
                     </contentRight>
                 </Bar>

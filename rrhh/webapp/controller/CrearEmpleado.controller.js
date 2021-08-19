@@ -32,6 +32,7 @@ sap.ui.define([
                 oView.setModel(this.oJSONModelNuevo, "nuevoEmpleadoModel");
 
                 //var oJSONModel = new sap.ui.model.json.JSONModel([]);
+                //oView.setModel(oJSONModel, "empleadosModel");
                 //var oODataModel  = new sap.ui.model.odata.v2.ODataModel("ZEMPLOYEES_SRV");
                 //var oODataModel = this.getOwnerComponent().getModel("empleadosModel");
 
@@ -367,6 +368,46 @@ sap.ui.define([
                         }
                     }.bind(this)
                 });
+            },
+
+            wizardGuardar: function(){
+                //this.getOwnerComponent().SapId,
+                //oODataModel = new sap.ui.model.odata.v2.ODataModel("ZEMPLOYEES_SRV");
+                var oODataModel = this.getOwnerComponent().getModel("empleadosModel");
+                //var oODataModel2 = this.getView().getModel("empleadosModel").getData();
+                var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
+                //var creationDate = new Date(); //sap.ui.model.odata.type.DateTime; 
+                //creationDate = this.oJSONModelNuevo.getProperty("/CreationDate");
+                //var oDataUtils = new sap.ui.model.odata.ODataUtils.formatValue(creationDate,"Edm.DateTime");
+                //sap.ui.model.odata.type.date
+                //oDataUtils.formatValue(datetime,"Edm.DateTime");
+                //creationDate, //
+                var body = {
+                    //EmployeeId: "",
+                    SapId: this.getOwnerComponent().SapId,
+                    Type: this.oJSONModelNuevo.getProperty("/Type").toString(),
+                    FirstName: "NOMBRE", //this.oJSONModelNuevo.getProperty("/FirstName").toString(),
+                    LastName: "APELLIDO", //this.oJSONModelNuevo.getProperty("/LastName").toString(),
+                    Dni: "12097081R",//this.oJSONModelNuevo.getProperty("/Dni").toString(),
+                    CreationDate: this.oJSONModelNuevo.getProperty("/CreationDate"),
+                    Comments: this.oJSONModelNuevo.getProperty("/Comments").toString()   
+                };
+                console.log(body);
+
+                oODataModel.create("/Users", body, {
+                        success: function () {
+                            console.log(data);
+                            MessageBox.success(oResourceBundle.getText("saveOK"));
+                            //this.onReadODataIncidence.bind(this)(employeeId);
+                            //sap.m.MessageToast.show(oResouceBundle.getText("odataSaveOK"));
+                            //MessageBox.success(oResouceBundle.getText("saveNoOK")); 
+                        }.bind(this),
+                        error: function (e) {
+                            console.log(e);
+                            MessageBox.error(oResourceBundle.getText("saveNoOK"));
+                            //sap.m.MessageToast.show(oResouceBundle.getText("odataSaveKO"));
+                        }.bind(this)
+                    });
             }
 
         });

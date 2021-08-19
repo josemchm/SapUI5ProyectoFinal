@@ -34,6 +34,10 @@ sap.ui.define([
               //  let sTitle = oEvent.getParameter("title");
             //document.title = "RRHH";
            // });
-		}
+        },
+        
+        //identificador para guardar en servicio
+        //SapId: "josemchm@gmail.com"
+        SapId: "training@logaligroup.com"
 	});
 });

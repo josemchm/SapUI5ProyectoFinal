@@ -26,12 +26,16 @@
 										</items>   selectedItem="{nuevoEmpleadoModel>/Type}"                                       
                             </SegmentedButton> --> 
 
-                            <SegmentedButton id="tipoButton" selectionChange="setTipoEmpleado" selectedItem=""
+                            <!-- <SegmentedButton id="tipoButton" selectionChange="setTipoEmpleado" selectedItem=""
                                              items="{tiposModel>/Tipos}" selectedKey="{nuevoEmpleadoModel>/Type}" >										
                                         <items>
                                             <SegmentedButtonItem key="{tiposModel>Key}" text="{tiposModel>Text}" width="10rem" class="sapUiSmallMarginEnd"/>
 										</items>                                        
-                            </SegmentedButton>
+                            </SegmentedButton> -->
+
+                            <Button id="btnTipo0" text="{i18n>interno}" class="sapUiSmallMarginEnd"  press="setTipoEmpleado" width="10rem" />
+                            <Button id="btnTipo1" text="{i18n>autonomo}" class="sapUiSmallMarginEnd" press="setTipoEmpleado"  width="10rem" />
+                            <Button id="btnTipo2" text="{i18n>gerente}" press="setTipoEmpleado"  width="10rem" />
 
                         </FlexBox>		
                     </WizardStep>

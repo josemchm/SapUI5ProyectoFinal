@@ -8,29 +8,29 @@ sap.ui.define([
 	function (Controller) {
 		"use strict";
 
-        function _onObjectMatched(oEvent) {
+        // function _onObjectMatched(oEvent) {
 
-            //this.onClearSignature();
+        //     //this.onClearSignature();
 
-            this.getView().bindElement({
-                path: "/Users(" + oEvent.getParameter("arguments").OrderID + ")",
-                model: "empleadosModel",
-                events: {
-                    dataReceived: function (oData) {
-                        _readFiles.bind(this)(oData.getParameter("data").EmployeeId,
-                                              oData.getParameter("data").SapId);
-                    }.bind(this)
-                }
-            });
+        //     this.getView().bindElement({
+        //         path: "/Users(" + oEvent.getParameter("arguments").OrderID + ")",
+        //         model: "empleadosModel",
+        //         events: {
+        //             dataReceived: function (oData) {
+        //                 _readFiles.bind(this)(oData.getParameter("data").EmployeeId,
+        //                                       oData.getParameter("data").SapId);
+        //             }.bind(this)
+        //         }
+        //     });
 
-            const objContext = this.getView().getModel("empleadosModel").getContext("/Users("
-                + oEvent.getParameter("arguments").OrderID + ")").getObject();
+        //     const objContext = this.getView().getModel("empleadosModel").getContext("/Users("
+        //         + oEvent.getParameter("arguments").OrderID + ")").getObject();
 
-            if (objContext) {
-                _readSignature.bind(this)(objContext.EmployeeId, objContext.SapId);
-            }
+        //     if (objContext) {
+        //         _readSignature.bind(this)(objContext.EmployeeId, objContext.SapId);
+        //     }
 
-        };
+        // };
 
         function _readFiles(EmployeeId, SapId) {
 

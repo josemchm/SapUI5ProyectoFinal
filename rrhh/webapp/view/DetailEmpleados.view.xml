@@ -13,7 +13,7 @@
     </VBox>
 
     <Page id="datosEmpleado" visible="false">
-        <ObjectHeader title="{empleadosModel>FirstName} {empleadosModel>LastName}" icon="sap-icon://add-employee" 
+        <ObjectHeader id="oHeader" title="{empleadosModel>FirstName} {empleadosModel>LastName}" 
                       intro="{empleadosModel>Dni}"
                       responsive="true"
                       backgroundDesign="Translucent"
@@ -21,11 +21,12 @@
             
                 <ObjectAttribute title="{i18n>creationDate}" text="{    path:'empleadosModel>CreationDate',
                                                                         type: 'sap.ui.model.odata.type.Date'}"/>
-                <ObjectAttribute title="{i18n>type}" text="{empleadosModel>Type}"/>
+                <!-- <ObjectAttribute title="{i18n>type}" text="{empleadosModel>Type}"/> -->
+                <ObjectAttribute id="tipoEmpleado" title="{i18n>type}"/>
 
                 <ObjectAttribute title="{i18n>comments}" text="{empleadosModel>Comments}"/>
                 <!-- <statuses>
-                    <ObjectStatus title="{i18n>comments}" text="{empleadosModel>Comments}"/>
+                    <ObjectStatus title="{i18n>comments}" text="{empleadosModel>Comments}"/> icon="sap-icon://add-employee" 
                 </statuses> -->
             
         </ObjectHeader>
@@ -50,12 +51,18 @@
                     <commons:Timeline   id="idTimeLine" 
                                         enableDoubleSided="true"
                                         groupByType="Year"
-                                        groupBy="dateTime"
+                                        groupBy="CreationDate"
                                         sortOldestFirst="true"
                                         showHeaderBar="false"
-                                        showIcons="false">
+                                        showIcons="false"
+                                        >
                         <commons:content>
-                            <commons:TimelineItem 
+                                <!-- <commons:TimelineItem   content="{empleadosModel>/Salaries}"
+                                        id="idTimelineItem" groupBy="dateTime"
+                                        dateTime="{CreationDate}"
+                                        text="{Comments}"
+                                        userName="{Amount}" /> -->
+                            <!-- <commons:TimelineItem 
                                         id="idTimelineItem1"
                                         dateTime="Date(1619136000000)"
                                         text="Comments"
@@ -69,7 +76,7 @@
                                         id="idTimelineItem3"
                                         dateTime="/Date(1628812800000)/"
                                         text="Comments3"
-                                        userName="3000.00" />
+                                        userName="3000.00" /> -->
                             
                         </commons:content>
                         <!-- <commons:filterList> content="{/Salaries}"

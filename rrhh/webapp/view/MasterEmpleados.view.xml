@@ -11,7 +11,7 @@
     </OverflowToolbar>
     <List id="standardList" items="{empleadosModel>/Users}">
         <items>
-            <StandardListItem title="{empleadosModel>LastName}"
+            <StandardListItem title="{empleadosModel>FirstName} {empleadosModel>LastName}"
                               description="{empleadosModel>Dni}" 
                               type="Navigation" press="showEmpleado"/>
         </items>

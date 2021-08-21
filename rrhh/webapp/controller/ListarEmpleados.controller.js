@@ -16,6 +16,7 @@ sap.ui.define([
             onInit: function () {
                 this._bus = sap.ui.getCore().getEventBus();
                 this._bus.subscribe("flexible", "showEmpleado", this.showEmpleadoDetails, this);
+                this._bus.subscribe("flexible", "eliminarEmpleado", this.elimimarEmpleado, this);
             },
 
             showEmpleadoDetails: function (category, nameEvent, path) {
@@ -59,48 +60,18 @@ sap.ui.define([
 
                 this.onReadODataEmpleado(this._detailEmpleadosView.getBindingContext("empleadosModel").getObject().EmployeeId,
                 this._detailEmpleadosView.getBindingContext("empleadosModel").getObject().SapId);
-        },
+            },
 
             onReadODataEmpleado: function (EmployeeId, SapId) {
+
+                var detailView = this.getView().byId("detailEmpleadosView");
+
                 this.getView().getModel("empleadosModel").read("/Users", {
                     filters: [
                         new sap.ui.model.Filter("SapId", "EQ", SapId),
                         new sap.ui.model.Filter("EmployeeId", "EQ", EmployeeId.toString())
                     ],
                     success: function (data) {
-
-                        
-                        SapId = data.results[0].SapId; //"matiasp@pro-tech.com.ar";
-                        EmployeeId = data.results[0].EmployeeId; //"000";
-
-                        //Bind Files
-                        this._detailEmpleadosView.byId("uploadCollection").bindAggregation("items", {
-                            path: "empleadosModel>/Attachments",
-                            filters: [
-                                new sap.ui.model.Filter("EmployeeId", "EQ", EmployeeId),
-                                new sap.ui.model.Filter("SapId", "EQ", SapId),
-                            ],
-                            template: new sap.m.UploadCollectionItem({
-                                documentId: "{empleadosModel>AttId}",
-                                fileName: "{empleadosModel>DocName}",
-                                visibleEdit: false
-                            }).attachPress(this.downloadFile)
-                        });
-
-                        //Bind Salary
-                        this._detailEmpleadosView.byId("idTimeLine").bindAggregation("content", {
-                            path: "empleadosModel>/Salaries",
-                            filters: [
-                                new sap.ui.model.Filter("EmployeeId", "EQ", EmployeeId),
-                                new sap.ui.model.Filter("SapId", "EQ", SapId),
-                            ],
-                            template: new sap.suite.ui.commons.TimelineItem({
-                                dateTime: "{empleadosModel>CreationDate}",
-                                text: "{empleadosModel>Comments}",
-                                userName:"{empleadosModel>Ammount}"
-                            })
-                        });
-
                         // var incidenceModel = this._detailEmployeeView.getModel("incidenceModel");
                         // incidenceModel.setData(data.results);
                         // var tableIncidence = this._detailEmployeeView.byId("tableIncidence");
@@ -117,15 +88,71 @@ sap.ui.define([
                         //     tableIncidence.addContent(newIncidence);
                         // };
                     }.bind(this),
+                    
                     error: function (e) {
+                    }.bind(this)
+                });
+
+
+                                        
+                //SapId = data.results[0].SapId; //"matiasp@pro-tech.com.ar";
+                //EmployeeId = data.results[0].EmployeeId; //"000";
+
+                //Bind Files
+                this._detailEmpleadosView.byId("uploadCollection").bindAggregation("items", {
+                    path: "empleadosModel>/Attachments",
+                    filters: [
+                        new sap.ui.model.Filter("EmployeeId", "EQ", EmployeeId),
+                        new sap.ui.model.Filter("SapId", "EQ", SapId),
+                    ],
+                    template: new sap.m.UploadCollectionItem({
+                        documentId: "{empleadosModel>AttId}",
+                        fileName: "{empleadosModel>DocName}",
+                        visibleEdit: false
+                    }).attachPress(this.downloadFile)
+                });
+
+                //Bind Salary
+                this._detailEmpleadosView.byId("idTimeLine").bindAggregation("content", {
+                    path: "empleadosModel>/Salaries",
+                    filters: [
+                        new sap.ui.model.Filter("EmployeeId", "EQ", EmployeeId),
+                        new sap.ui.model.Filter("SapId", "EQ", SapId),
+                    ],
+                    template: new sap.suite.ui.commons.TimelineItem({
+                        dateTime: "{empleadosModel>CreationDate}",
+                        text: "{empleadosModel>Comments}",
+                        userName:"{empleadosModel>Ammount}"
+                    })
+                });
+
+            },
+
+            elimimarEmpleado: function(category, nameEvent, path){
+                                
+                var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();             
+                
+                this.getView().getModel("empleadosModel").remove("/Users(EmployeeId='" + path.EmployeeId +
+                                                                        "',SapId='" + path.SapId + "')",
+                {
+                    success: function () {
+                        //this.onReadODataEmpleado.bind(this)(path.EmployeeId, path.SapId);
+                        sap.m.MessageToast.show(oResourceBundle.getText("empleadoDeleteOK"));
+
+                        this._detailEmpleadosView.byId("boxMensaje").setVisible(true);
+                        this._detailEmpleadosView.byId("datosEmpleado").setVisible(false);
+
+                        this.getView().byId("masterEmpleadosView").byId("standardList").getBinding("items").refresh();                        
+
+                    }.bind(this),
+                    error: function (e) {
+                        sap.m.MessageToast.show(oResourceBundle.getText("empleadoDeleteKO"));
                     }.bind(this)
                 });
             },
 
             downloadFile: function (oEvent) {
                 const sPath = oEvent.getSource().getBindingContext("empleadosModel").getPath();
-                //alert(sPath);
-                //console.log(sPath);
                 window.open("/sap/opu/odata/sap/ZEMPLOYEES_SRV" + sPath + "/$value");
             }
 

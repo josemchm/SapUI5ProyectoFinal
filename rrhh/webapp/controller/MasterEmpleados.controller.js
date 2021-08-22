@@ -36,8 +36,6 @@ sap.ui.define([
 		        sQuery = oEvent.getParameter("query");
 
                 if (sQuery && sQuery.length > 0) {
-                    // oTableSearchState = [new Filter("LastName", FilterOperator.Contains, sQuery),
-                    //                      new Filter("FirstName", FilterOperator.Contains, sQuery)];
                     oTableSearchState = [new Filter( {  filters:[
                                                                new Filter("LastName", FilterOperator.Contains, sQuery),
                                                                new Filter("FirstName", FilterOperator.Contains, sQuery) 

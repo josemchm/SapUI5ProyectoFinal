@@ -16,20 +16,5 @@
                               type="Navigation" press="showEmpleado"/>
         </items>
     </List>
-    <!-- <Table id="tableEmpleados" items="{empleadosModel>/Users}">  width="17.5rem"
-        <columns> 
-            <Column visible="false" />
-            <Column visible="false" />
-        </columns>
-        <items>
-            <ColumnListItem type="Navigation" press="showEmpleado">
-                <cells>
-                    <Label text="{empleadosModel>LastName}"/>
-                    <Label text="{empleadosModel>dni}"/>
-                    <core:Icon src="sap-icon://show" press="showOrders"></core:Icon>
-                </cells>
-            </ColumnListItem>
-        </items>
-    </Table> -->
 </Page>
 </mvc:View>

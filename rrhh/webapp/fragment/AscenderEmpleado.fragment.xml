@@ -14,8 +14,7 @@
 
             <Label text="{i18n>comments}" labelFor="inputSalario"/>
             <TextArea   id="inputComentario" showExceededText="false" maxLength="200" width="100%" 
-                        valueLiveUpdate="true" value="{ascenderModel>/Comments}"/>
-                                
+                        valueLiveUpdate="true" value="{ascenderModel>/Comments}"/>                                
         </f:SimpleForm>
     </content>
     <beginButton>

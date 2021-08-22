@@ -23,7 +23,7 @@ sap.ui.define([
                 var detailView = this.getView().byId("detailEmpleadosView");
                 detailView.bindElement("empleadosModel>" + path);
 
-                //icono 7 txt Tipo
+                //icono txt Tipo
                 var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
                 
                 switch (this._detailEmpleadosView.getBindingContext("empleadosModel").getObject().Type) {
@@ -44,19 +44,8 @@ sap.ui.define([
                         break;
                 };
 
-
-                //var boxMensaje = detailView.getView().byId("boxMensaje");
-
-                //this.getView().getModel("jsonLayout").setProperty("/ActiveKey", "TwoColumnsMidExpanded");
-
-                //var incidenceModel = new sap.ui.model.json.JSONModel([]);
-                //detailView.setModel(incidenceModel, "incidenceModel");
-                //detailView.byId("tableIncidence").removeAllContent();
-                // var oHeader = this.getView().byId("oHeader");
-                // oHeader.setIcon("sap-icon://employee-pane");
                 this._detailEmpleadosView.byId("boxMensaje").setVisible(false);
                 this._detailEmpleadosView.byId("datosEmpleado").setVisible(true);
-
 
                 this.onReadODataEmpleado(this._detailEmpleadosView.getBindingContext("empleadosModel").getObject().EmployeeId,
                 this._detailEmpleadosView.getBindingContext("empleadosModel").getObject().SapId);
@@ -72,31 +61,11 @@ sap.ui.define([
                         new sap.ui.model.Filter("EmployeeId", "EQ", EmployeeId.toString())
                     ],
                     success: function (data) {
-                        // var incidenceModel = this._detailEmployeeView.getModel("incidenceModel");
-                        // incidenceModel.setData(data.results);
-                        // var tableIncidence = this._detailEmployeeView.byId("tableIncidence");
-                        // tableIncidence.removeAllContent();
-
-                        // for(var incidence in data.results){
-
-                        //     data.results[incidence]._validateDate = true;
-                        //     data.results[incidence].EnabledSave = false;
-
-                        //     var newIncidence = sap.ui.xmlfragment("logaligroup.Employees.fragment.NewIncidence",this._detailEmployeeView.getController());
-                        //     this._detailEmployeeView.addDependent(newIncidence);
-                        //     newIncidence.bindElement("incidenceModel>/"+incidence);
-                        //     tableIncidence.addContent(newIncidence);
-                        // };
                     }.bind(this),
                     
                     error: function (e) {
                     }.bind(this)
                 });
-
-
-                                        
-                //SapId = data.results[0].SapId; //"matiasp@pro-tech.com.ar";
-                //EmployeeId = data.results[0].EmployeeId; //"000";
 
                 //Bind Files
                 this._detailEmpleadosView.byId("uploadCollection").bindAggregation("items", {
@@ -136,7 +105,6 @@ sap.ui.define([
                                                                         "',SapId='" + path.SapId + "')",
                 {
                     success: function () {
-                        //this.onReadODataEmpleado.bind(this)(path.EmployeeId, path.SapId);
                         sap.m.MessageToast.show(oResourceBundle.getText("empleadoDeleteOK"));
 
                         this._detailEmpleadosView.byId("boxMensaje").setVisible(true);

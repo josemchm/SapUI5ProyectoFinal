@@ -29,11 +29,6 @@ sap.ui.define([
             //read text from i18n model
             var oBundle = this.getModel("i18n").getResourceBundle().getText("appTitle");
             document.title = oBundle;
-
-            //this.getRouter().attachTitleChanged( oEvent => {
-              //  let sTitle = oEvent.getParameter("title");
-            //document.title = "RRHH";
-           // });
         },
         
         //identificador para guardar en servicio

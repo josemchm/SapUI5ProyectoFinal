@@ -16,23 +16,7 @@
                         <MessageStrip class="sapUiSmallMarginBottom"
 									  text="{i18n>wizardPaso1Mensaje}"
 									  showIcon="true"/>
-                        <!-- <HBox alignItems="Center" justifyContent="Center" width="100%" > -->
                         <FlexBox alignItems="Center" justifyContent="Center" height="100px">
-                            <!-- <SegmentedButton selectionChange="setTipoEmpleado" selectedItem="" selectedKey="{nuevoEmpleadoModel>/Type}">										
-                                        <items>
-                                            <SegmentedButtonItem key="0" text="{i18n>interno}" width="10rem" class="sapUiSmallMarginEnd"/>
-                                            <SegmentedButtonItem key="1" text="{i18n>autonomo}" width="10rem" class="sapUiSmallMarginEnd"/>
-											<SegmentedButtonItem key="2" text="{i18n>gerente}"  width="10rem"/>
-										</items>   selectedItem="{nuevoEmpleadoModel>/Type}"                                       
-                            </SegmentedButton> --> 
-
-                            <!-- <SegmentedButton id="tipoButton" selectionChange="setTipoEmpleado" selectedItem=""
-                                             items="{tiposModel>/Tipos}" selectedKey="{nuevoEmpleadoModel>/Type}" >										
-                                        <items>
-                                            <SegmentedButtonItem key="{tiposModel>Key}" text="{tiposModel>Text}" width="10rem" class="sapUiSmallMarginEnd"/>
-										</items>                                        
-                            </SegmentedButton> -->
-
                             <Button id="btnTipo0" text="{i18n>interno}" class="sapUiSmallMarginEnd"  press="setTipoEmpleado" width="10rem" />
                             <Button id="btnTipo1" text="{i18n>autonomo}" class="sapUiSmallMarginEnd" press="setTipoEmpleado"  width="10rem" />
                             <Button id="btnTipo2" text="{i18n>gerente}" press="setTipoEmpleado"  width="10rem" />
@@ -55,22 +39,13 @@
                             <Label id="inputDNITxt" text="{i18n>dni}" required="true" labelFor="inputDNI"/>
                             <Input id="inputDNI" maxLength="20" value="{nuevoEmpleadoModel>/Dni}" valueState="Error" liveChange="ValidarPaso2"/>
 
-                            <!-- <Label text="{i18n>cif}" required="true" labelFor="inputCIF"/>
-                            <Input id="inputCIF" maxLength="20" value="{nuevoEmpleadoModel>/Dni}" valueState="Error" liveChange="ValidarPaso2"/> -->
-
                             <Label id="inputSalarioTxt" text="{i18n>salario}" labelFor="inputSalario"/>
                             <Slider id="inputSalario" showAdvancedTooltip="true" min="12000" max="80000" class="sapUiSmallMarginBottom"
                                     enableTickmarks="true" step="1000" value="{nuevoEmpleadoModel>/Amount}"/>
 
-                            <!-- <Label id="inputPrecioTxt" text="{i18n>precio}" labelFor="inputPrecio" />
-                            <Slider id="inputPrecio" showAdvancedTooltip="true" min="100" max="2000" class="sapUiSmallMarginBottom"
-                                    enableTickmarks="true" step="100" value="{nuevoEmpleadoModel>/Amount}" visible="false"/> -->
-
                             <Label text="{i18n>fecha}" required="true" labelFor="inputFecha" />
                             <DatePicker id="inputFecha" dateValue="{nuevoEmpleadoModel>/CreationDate}" 
                                         valueState="Error" change="ValidarPaso2"/>
-                            <!-- <DatePicker id="inputFecha2" dateValue="{empleadosModel>/CreationDate}"/> -->
-
                         </form:SimpleForm>
                     </WizardStep>
                     
@@ -82,7 +57,7 @@
                         <Text text="{i18n>comentario}" class="sapUiTinyMarginTop"/>
                         <TextArea   id="textAreaWithBinding2" showExceededText="true" maxLength="200" width="100%" 
                                     liveChange="handleLiveChange" valueLiveUpdate="true" value="{nuevoEmpleadoModel>/Comments}"/>
-                        <!-- uploadUrl="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments" -->
+                        
                         <UploadCollection   id="uploadCollection"
                                         maximumFilenameLength="55"
                                         maximumFileSize="10"
@@ -125,21 +100,15 @@
                         <Text id="apellidosReview" text="{nuevoEmpleadoModel>/LastName}"/>
                         <Label id="dniReviewTxt" text="{i18n>dni}" labelFor="dniReview"/>
                         <Text id="dniReview" text="{nuevoEmpleadoModel>/Dni}"/>
-                        <!-- <Label text="{i18n>cif}" labelFor="cifReview"/>
-                        <Text id="cifReview" text="{/Dni}"/>-->
-                        <Label id="salarioReviewTxt" text="{i18n>salario}" labelFor="salarioReview"/> 
+                         <Label id="salarioReviewTxt" text="{i18n>salario}" labelFor="salarioReview"/> 
                         <Text id="salarioReview" text="{nuevoEmpleadoModel>/Amount}"/>
-                        <!-- <Label text="{i18n>precio}" labelFor="precioReview"/>
-                        <Text id="precioReview" text="{nuevoEmpleadoModel>/Amount}"/> -->
-                        <Label text="{i18n>fecha}" labelFor="fechaReview"/>
+                         <Label text="{i18n>fecha}" labelFor="fechaReview"/>
                         <Text id="fechaReview" text="{  path: 'nuevoEmpleadoModel>/CreationDate', 
                                                         type: 'sap.ui.model.type.DateTime', 
                                                         formatOptions: { 
                                                                             pattern: 'dd MMM yyyy'
                                                                         } 
                                                     }"/>
-                        <!-- <Text id="fechaReview" text="{nuevoEmpleadoModel>/CreationDate}" /> -->
-
                         <Link press="editPaso2" text="{i18n>reviewEditar}" />
                     </form:content>
                 </form:SimpleForm>
@@ -153,10 +122,8 @@
                                             uploadEnabled="false"
                                             uploadButtonInvisible="true"
                                             multiple="true"
-                                            instantUpload="false"
-                                            
+                                            instantUpload="false"                                            
                                             />
-
                         <Link press="editPaso3" text="{i18n>reviewEditar}" />
                     </form:content>
                 </form:SimpleForm>

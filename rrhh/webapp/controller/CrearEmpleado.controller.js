@@ -18,14 +18,6 @@ sap.ui.define([
 
         return Controller.extend("proyectofinal.rrhh.controller.CrearEmpleado", {
 
-            // onBeforeRendering: function(){
-            //     console.log("Bebore");
-            //     //this.getView().byId("tipoButton").bindItems("{tiposModel>/Tipos}");
-            //     //this.oJSONModelNuevo.setProperty("/Type","");
-            //     //this.getView().byId("tipoButton").setSelectedItem();
-            //     //this.getView().byId("tipoButton").setSelectedKey();
-            // },
-
             onInit: function () {
                 var oView = this.getView();
 
@@ -33,27 +25,8 @@ sap.ui.define([
                 this._oNavContainer = this.getView().byId("NavContainer");
 			    this._oWizardContentPage = this.getView().byId("ContentPage");
 
-                // var oJSONModelTipo = new sap.ui.model.json.JSONModel();
-                // oJSONModelTipo.loadData("./model/json/TiposEmpleado.json", false);
-                // oView.setModel(oJSONModelTipo, "tiposModel");
-
                 this.oJSONModelNuevo = new sap.ui.model.json.JSONModel();
-                //this.oJSONModelNuevo.loadData("./model/json/Empleados.json", false);
                 oView.setModel(this.oJSONModelNuevo, "nuevoEmpleadoModel");
-
-                //var oJSONModel = new sap.ui.model.json.JSONModel([]);
-                //oView.setModel(oJSONModel, "empleadosModel");
-                //var oODataModel  = new sap.ui.model.odata.v2.ODataModel("ZEMPLOYEES_SRV");
-                //var oODataModel = this.getOwnerComponent().getModel("empleadosModel");
-
-                // oView.setModel(oJSONModel, "empleadosModel");
-                // var incidenceModel = this.getView().getModel("empleadosModel");
-                // var odata = incidenceModel.getData();
-                // odata.push({index: 1});
-                // incidenceModel.refresh();
-
-                //this.getView().setModel("empleadosModel>Users");empleadosModel                
-
             },
 
             _handleNavigationToStep: function (iStepNumber) {
@@ -83,7 +56,7 @@ sap.ui.define([
             },
 
             discardProgressCustom: function () {
-                //alert("hello");
+                
                 this._wizard.discardProgress(this.byId("wizardPaso1"));
 
                 var clearContent = function (content) {
@@ -98,22 +71,8 @@ sap.ui.define([
                     }
                 };
 
-                //this.model.setProperty("/productWeightState", "Error");
-                //this.model.setProperty("/productNameState", "Error");
                 clearContent(this._wizard.getSteps());
-                // var tipoEmpleado = this.oJSONModelNuevo.getProperty("/Type");
-
-                // console.log("EMPLEADO->" + tipoEmpleado);
-                //this.oJSONModelNuevo.setProperty("/Type","");
-                //this.getView().byId("tipoButton").setSelectedItem();
-                //this.getView().byId("tipoButton").setSelectedKey();
-                //this.getView().byId("tipoButton").unbindSelectedKey();
-                //this.getView().byId("tipoButton").unbindItems();
-
-                //this.getView().byId("tipoButton").destroyItems();
-                // var tipoEmpleado2 = this.oJSONModelNuevo.getProperty("/Type");
-                // console.log("EMPLEADO2->" + tipoEmpleado2);
-
+ 
                 var oUploadCollection = this.getView().byId("uploadCollection");
                 oUploadCollection.removeAllItems();
                 oUploadCollection.destroyItems();
@@ -135,20 +94,12 @@ sap.ui.define([
                         if (oAction === MessageBox.Action.YES) {
                             this._handleNavigationToStep(0);
                             this.discardProgressCustom();
-                            //this._wizard.discardProgress(this._wizard.getSteps()[0]);
-
-                            // this._bus.publish("incidence", "onDeleteIncidence", {
-                            //     IncidenceId: contextObj.IncidenceId,
-                            //     SapId: contextObj.SapId,
-                            //     EmployeeId: contextObj.EmployeeId
-                            // });
                         }
                     }.bind(this)
                 });
             },
 
             wizardComplete: function () {
-                //this._oNavContainer = this.byId("navContainer");
                 this._oNavContainer.to(this.byId("wizardReviewPage"));
 
                 //mostrar adjuntos en preview
@@ -158,10 +109,8 @@ sap.ui.define([
                 oReviewCollection.removeAllItems();
                 oReviewCollection.destroyItems();
 
-                //var items = oUploadCollection.getItems().length;
                 for (let i = 0; i < oUploadCollection.getItems().length; i++) {
                     var item = new sap.m.UploadCollectionItem();
-                    //var item = oUploadCollection.getItems()[i];
                     item.setFileName(oUploadCollection.getItems()[i].getFileName());
                     item.setVisibleDelete(false);
                     oReviewCollection.addItem(item);
@@ -171,11 +120,8 @@ sap.ui.define([
 
 
             setTipoEmpleado: function (oEvent) {
-                //this._wizard.validateStep(this.byId("wizardPaso1"));
-                //this._wizard.nextStep();
-                //this._handleNavigationToStep(1);
 
-                var tipoEmpleado;// = this.getView().getModel("nuevoEmpleadoModel").getProperty("/Type");
+                var tipoEmpleado;
                 var oView = this.getView();
                 var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
 
@@ -199,7 +145,6 @@ sap.ui.define([
                 
                 oEvent.getSource().setType("Emphasized");
                 
-                //console.log(oEvent.getText());
                 switch(tipoEmpleadoTxt){
                     case oResourceBundle.getText("interno"):
                         tipoEmpleado = "0";
@@ -221,16 +166,11 @@ sap.ui.define([
                         oSalarioTxt.setText(textoSalario);
                         oSalarioReviewTxt.setText(textoSalario);
 
-
-                        //this._ocultarCampo(oView.byId("inputCIF"));
-                        //this._mostrarCampo(oView.byId("inputDNI"));
-
                         //defecto 24000 rango 12000 y 80000
                         oSalario.setMin(12000);
                         oSalario.setMax(80000);
                         oSalario.setStep(1000);
                         oSalario.setValue(24000);
-                        //oSalario.change();
                         break;
 
                     case "1": //Autónomo
@@ -240,16 +180,11 @@ sap.ui.define([
                         oSalarioTxt.setText(textoPrecio);
                         oSalarioReviewTxt.setText(textoPrecio);
 
-
-                        //this._ocultarCampo(oView.byId("inputDNI"));
-                        //this._mostrarCampo(oView.byId("inputCIF"));
-
                         //defecto 24000 rango 12000 y 80000
                         oSalario.setMin(100);
                         oSalario.setMax(2000);
                         oSalario.setStep(100);
                         oSalario.setValue(400);
-                        //oSalario.change();
                         break;
 
                    case "2": //Gerente
@@ -259,46 +194,23 @@ sap.ui.define([
                         oSalarioTxt.setText(textoSalario);
                         oSalarioReviewTxt.setText(textoSalario);
 
-
-                        //this._ocultarCampo(oView.byId("inputCIF"));
-                        //this._mostrarCampo(oView.byId("inputDNI"));
-
                         //defecto 70000 rango 50000 y 200000
                         oSalario.setMin(50000);
                         oSalario.setMax(200000);
                         oSalario.setStep(10000);
                         oSalario.setValue(70000);
-                        //oSalario.change();
                         break;
 
                     default:
                         break;
                 }
 
-                // var tipoEmpleadoTxt = oEvent.getParameters().item.getText();
-                // this.oJSONModelNuevo.setProperty("/TypeTxt", tipoEmpleadoTxt);
                 this._wizard.setCurrentStep(this._wizard.getSteps()[0]);
                 this._wizard.validateStep(this.byId("wizardPaso1"));
                 this._wizard.nextStep();
-                //this._wizard.goToStep(this._wizard.getSteps()[1]);
-
             },
 
-            // _ocultarCampo: function(fieldName){
-            //     if( fieldName.getVisible()){
-            //         fieldName.setVisible(false);
-            //     };
-            // },
-
-            // _mostrarCampo: function(fieldName){
-            //     if( !fieldName.getVisible()){
-            //         fieldName.setVisible(true);
-            //     };
-            // },
-
             ValidarPaso2: function () {
-                //    this.getView().getModel("empleadosModel").getData();
-                //oEvent.getSource().getBindingContext("empleadosModel").getModel().refresh();
                 var oView = this.getView();
                 var tipoEmpleado = oView.getModel("nuevoEmpleadoModel").getProperty("/Type");
                 var oNombre = oView.byId("inputNombre");
@@ -307,7 +219,6 @@ sap.ui.define([
                 var oFecha = oView.byId("inputFecha");
 
                 var error = false;
-
 
                 //Validando Campos
                 //Nombre
@@ -371,8 +282,6 @@ sap.ui.define([
             },
 
             _validarDNI: function(oEvent){
-
-                //var dni = oEvent.getParameter("value");
                 var dni = oEvent.getValue();
                 var number;
                 var letter;
@@ -402,9 +311,6 @@ sap.ui.define([
             },
 
             crearCancel: function(){
-                // const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                // oRouter.navTo("CrearEmpleado");
-                //this.wizardCancel();
                 var oHistory = History.getInstance();
                 var sPreviosHash = oHistory.getPreviousHash();
 
@@ -415,8 +321,6 @@ sap.ui.define([
                         if (oAction === MessageBox.Action.YES) {
                             this._handleNavigationToStep(0);
                             this.discardProgressCustom();
-                            //this._wizard.discardProgress2(this._wizard.getSteps()[0]);
-
 
                             if (sPreviosHash !== undefined) {
                                 window.history.go(-1);
@@ -424,50 +328,33 @@ sap.ui.define([
                                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                                 oRouter.navTo("RouteApp", true);
                             }
-
-                            // this._bus.publish("incidence", "onDeleteIncidence", {
-                            //     IncidenceId: contextObj.IncidenceId,
-                            //     SapId: contextObj.SapId,
-                            //     EmployeeId: contextObj.EmployeeId
-                            // });
                         }
                     }.bind(this)
                 });
             },
 
             wizardGuardar: function(){
-                //this.getOwnerComponent().SapId,
-                //oODataModel = new sap.ui.model.odata.v2.ODataModel("ZEMPLOYEES_SRV");
                 var oODataModel = this.getOwnerComponent().getModel("empleadosModel");
-                //var oODataModel2 = this.getView().getModel("empleadosModel").getData();
                 var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
-                //var creationDate = new Date(); //sap.ui.model.odata.type.DateTime; 
-                //creationDate = this.oJSONModelNuevo.getProperty("/CreationDate");
-                //var oDataUtils = new sap.ui.model.odata.ODataUtils.formatValue(creationDate,"Edm.DateTime");
-                //sap.ui.model.odata.type.date
-                //oDataUtils.formatValue(datetime,"Edm.DateTime");
-                //creationDate, //
                 var tempMail = this._getRandonMail();
 
                 var body = {
                     //SapId: this.getOwnerComponent().SapId,
-                    SapId: tempMail, //this.getOwnerComponent().SapId,
+                    SapId: tempMail,
                     Type: this.oJSONModelNuevo.getProperty("/Type").toString(),
                     FirstName: this.oJSONModelNuevo.getProperty("/FirstName").toString(),
                     LastName: this.oJSONModelNuevo.getProperty("/LastName").toString(),
                     Dni: this.oJSONModelNuevo.getProperty("/Dni").toString(),
                     CreationDate: this.oJSONModelNuevo.getProperty("/CreationDate"),
-                    Comments: this.oJSONModelNuevo.getProperty("/Comments") //.toString() 
+                    Comments: this.oJSONModelNuevo.getProperty("/Comments")
                 };
-                console.log(body);
+                //console.log(body);
                 
-
                 oODataModel.create("/Users", body, {
-                        success: function (data, rpta2) {
-                            console.log(data);
-                            console.log(rpta2);
+                        success: function (data) {
+                            //console.log(data);
                             
-                            //enviando provisionalmente id 000
+                            //enviando id empelado generado
                             this.oJSONModelNuevo.setProperty("/EmployeeId",data.EmployeeId);
                             this.oJSONModelNuevo.setProperty("/SapId",data.SapId);
                             this._guardarSalario(data.EmployeeId, data.SapId);
@@ -478,21 +365,12 @@ sap.ui.define([
                                     this._retornarInicio();
                                 }.bind(this)
                             });
-                            
-                            
-
-                            //this.onReadODataIncidence.bind(this)(employeeId);
-                            //sap.m.MessageToast.show(oResouceBundle.getText("odataSaveOK"));
-                            //MessageBox.success(oResouceBundle.getText("saveNoOK")); 
                         }.bind(this),
                         error: function (e) {
-                            console.log(e);
+                            //console.log(e);
                             MessageBox.error(oResourceBundle.getText("saveNoOK"));
-                            //sap.m.MessageToast.show(oResouceBundle.getText("odataSaveKO"));
                         }.bind(this)
-                });
-
-                
+                });   
             },
 
             _guardarSalario: function(newEmployeeId, SapId){
@@ -507,30 +385,27 @@ sap.ui.define([
                     groupingEnabled: false,
                     decimalSeparator: "."
                     };
-                //var NumberFormat = new sap.ui.core.format.NumberFormat();
+
                 var oFloat = NumberFormat.getFloatInstance(oFormatOption); 
                 
                 var salario = oFloat.format(this.oJSONModelNuevo.getProperty("/Amount"));
-                //var oFloat = NumberFormat.getCurrencyInstance({currencyCode: false}); 
-                //var salario = oFloat.format(this.oJSONModelNuevo.getProperty("/Amount"),"EUR"); 
-
-                //var salario = NumberFormat.format(this.oJSONModelNuevo.getProperty("/Amount"));
 
                 var bodySalario = {
-                    SapId: SapId, //this.getOwnerComponent().SapId,
-                    EmployeeId: newEmployeeId, //"000",
+                    SapId: SapId,
+                    EmployeeId: newEmployeeId,
                     CreationDate: this.oJSONModelNuevo.getProperty("/CreationDate"),
                     Ammount: salario,
                     Waers: "EUR",
-                    Comments: this.oJSONModelNuevo.getProperty("/Comments") //.toString() 
+                    Comments: this.oJSONModelNuevo.getProperty("/Comments")
                 };
-                console.log(bodySalario);
+                //console.log(bodySalario);
+
                 oODataModel.create("/Salaries", bodySalario, {
                         success: function () {
-                            console.log("SalarioOK");
+                            //console.log("SalarioOK");
                         }.bind(this),
                         error: function () {
-                            console.log("SalarioNOOK");
+                            //console.log("SalarioNOOK");
                         }.bind(this)
                 });
             },
@@ -559,22 +434,17 @@ sap.ui.define([
             onFileBeforeUpload: function (oEvent) {
 
                 let fileName = oEvent.getParameter("fileName");
-                //let objContext = this.oJSONModelNuevo.getData(); 
-                //oEvent.getSource().getBindingContext("empleadosModel").getObject();
+
                 let oCustomerHeaderSlug = new sap.m.UploadCollectionParameter({
                     name: "slug",
                     value: this.oJSONModelNuevo.getProperty("/SapId").toString() + ";"
                             + this.oJSONModelNuevo.getProperty("/EmployeeId").toString() + ";"
                             + fileName
-                    // value: this.getOwnerComponent().SapId + ";"
-                    //         + this.oJSONModelNuevo.getProperty("/EmployeeId").toString() + ";"
-                    //         + fileName
                 });
                 oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
             },
 
-            onFileUploadComplete: function (oEvent) {
-                //oEvent.getSource().getBinding("items").refresh();                
+            onFileUploadComplete: function (oEvent) {           
             },
 
             _getRandonMail: function(){

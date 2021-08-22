@@ -1,0 +1,27 @@
+<core:FragmentDefinition  
+    xmlns:core="sap.ui.core" 
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form">
+<Dialog title="{i18n>nuevoAscenso}">    
+    <content>
+        <f:SimpleForm  width="300px">
+            <Label text="{i18n>salario}" required="true" labelFor="inputSalario"/>
+            <Input id="inputSalario" maxLength="30" value="{ascenderModel>/Amount}" valueState="Error" change="validarAscender" type="Number"/>
+
+            <Label text="{i18n>salario}" required="true" labelFor="inputFecha"/>
+            <DatePicker id="inputFecha" dateValue="{ascenderModel>/CreationDate}" valueState="Error" change="validarAscender"/>
+
+            <Label text="{i18n>comments}" labelFor="inputSalario"/>
+            <TextArea   id="inputComentario" showExceededText="false" maxLength="200" width="100%" 
+                        valueLiveUpdate="true" value="{ascenderModel>/Comments}"/>
+                                
+        </f:SimpleForm>
+    </content>
+    <beginButton>
+        <Button text="{i18n>ascenderAceptar}" press="ascenderAceptar"/>
+    </beginButton>    
+    <endButton>        
+        <Button text="{i18n>ascenderCancelar}" press="ascenderCancelar"/>
+    </endButton>
+</Dialog>    
+</core:FragmentDefinition>

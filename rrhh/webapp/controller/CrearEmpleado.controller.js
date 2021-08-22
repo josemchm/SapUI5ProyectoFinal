@@ -457,7 +457,7 @@ sap.ui.define([
                     LastName: this.oJSONModelNuevo.getProperty("/LastName").toString(),
                     Dni: this.oJSONModelNuevo.getProperty("/Dni").toString(),
                     CreationDate: this.oJSONModelNuevo.getProperty("/CreationDate"),
-                    Comments: this.oJSONModelNuevo.getProperty("/Comments").toString() 
+                    Comments: this.oJSONModelNuevo.getProperty("/Comments") //.toString() 
                 };
                 console.log(body);
                 
@@ -522,7 +522,7 @@ sap.ui.define([
                     CreationDate: this.oJSONModelNuevo.getProperty("/CreationDate"),
                     Ammount: salario,
                     Waers: "EUR",
-                    Comments: this.oJSONModelNuevo.getProperty("/Comments").toString() 
+                    Comments: this.oJSONModelNuevo.getProperty("/Comments") //.toString() 
                 };
                 console.log(bodySalario);
                 oODataModel.create("/Salaries", bodySalario, {

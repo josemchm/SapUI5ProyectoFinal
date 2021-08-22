@@ -1,4 +1,5 @@
 {
     "actions": [],
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "[xml].editor.defaultFormatter": "sapse.sap-ux-annotation-modeler-extension"
 }

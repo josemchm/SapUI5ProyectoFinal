@@ -38,6 +38,5 @@ sap.ui.define([
         
         //identificador para guardar en servicio
         SapId: "josemchm@gmail.com"
-        //SapId: "training@logaligroup.com"
 	});
 });

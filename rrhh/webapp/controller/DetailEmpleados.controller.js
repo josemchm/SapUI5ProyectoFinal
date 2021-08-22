@@ -143,7 +143,7 @@ sap.ui.define([
                 var oODataModel = this.getOwnerComponent().getModel("empleadosModel");
                 //var oOSalarioModel = this.getView().getModel("ascenderModel");
 
-                var oFormatOption = {
+                 var oFormatOption = {
                     minIntegerDigits: 1,
                     maxIntegerDigits: 17,
                     minFractionDigits: 2,
@@ -180,7 +180,7 @@ sap.ui.define([
                 });   
             },
 
-            ascenderCancelar: function(oEvent){
+            ascenderCancelar: function(oEvent){              
                 sap.ui.core.Fragment.byId("AscenderFragment","inputSalario").setValue("");
                 sap.ui.core.Fragment.byId("AscenderFragment","inputFecha").setValue("");
                 sap.ui.core.Fragment.byId("AscenderFragment","inputComentario").setValue("");
@@ -190,25 +190,51 @@ sap.ui.define([
 
             validarAscender: function(oEvent){
                 
-                //var tipoEmpleado = this.getView().byId("tipoEmpleado");
                 var oSalario = sap.ui.core.Fragment.byId("AscenderFragment","inputSalario");
                 var oFecha = sap.ui.core.Fragment.byId("AscenderFragment","inputFecha");
+                var oBtnAceptar = sap.ui.core.Fragment.byId("AscenderFragment","btnAscAceptar");
+                var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
+                var error = false;
+                var minimo = 0;
+                var maximo = 0;
+                
 
                 switch (this._tipoEmpleado) {
-                    case value:
-                        
+                    case oResourceBundle.getText("interno"):
+                        minimo = 12000;
+                        maximo = 80000;    
                         break;
+                    case oResourceBundle.getText("autonomo"):
+                        minimo = 100;
+                        maximo = 2000; 
+                        break;
+                    case oResourceBundle.getText("gerente"):                        
+                        minimo = 50000;
+                        maximo = 200000;
+                        break;
+                };
                 
-                    default:
-                        break;
+                if(oSalario.getValue() < minimo || oSalario.getValue() > maximo ){
+                    oSalario.setValueState("Error");
+                    //Rango de salario entre 0 - 1
+                    oSalario.setValueStateText(oResourceBundle.getText("rango",[minimo,maximo]));                    
+                    error = true;
                 }
-                //if(oSalario
-                //Fecha
+                else{
+                    oSalario.setValueState("None");
+                };
+                  
                 if(oFecha.isValidValue() && oFecha.getValue().length > 0){
                     oFecha.setValueState("None");
                 }else{
                     oFecha.setValueState("Error");
                     error = true;
+                };
+                
+                if(error === true){
+                    oBtnAceptar.setEnabled(false);
+                }else{
+                    oBtnAceptar.setEnabled(true);
                 };
             }
 

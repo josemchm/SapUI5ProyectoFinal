@@ -450,7 +450,7 @@ sap.ui.define([
                 var tempMail = this._getRandonMail();
 
                 var body = {
-                    //EmployeeId: "",
+                    //SapId: this.getOwnerComponent().SapId,
                     SapId: tempMail, //this.getOwnerComponent().SapId,
                     Type: this.oJSONModelNuevo.getProperty("/Type").toString(),
                     FirstName: this.oJSONModelNuevo.getProperty("/FirstName").toString(),

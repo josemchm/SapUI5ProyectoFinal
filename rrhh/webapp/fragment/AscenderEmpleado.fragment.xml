@@ -6,9 +6,10 @@
     <content>
         <f:SimpleForm  width="300px">
             <Label text="{i18n>salario}" required="true" labelFor="inputSalario"/>
-            <Input id="inputSalario" maxLength="30" value="{ascenderModel>/Amount}" valueState="Error" change="validarAscender" type="Number"/>
+            <Input id="inputSalario" maxLength="30" value="{ascenderModel>/Amount}" valueState="Error" 
+                    liveChange="validarAscender" type="Number"/>
 
-            <Label text="{i18n>salario}" required="true" labelFor="inputFecha"/>
+            <Label text="{i18n>fecha}" required="true" labelFor="inputFecha"/>
             <DatePicker id="inputFecha" dateValue="{ascenderModel>/CreationDate}" valueState="Error" change="validarAscender"/>
 
             <Label text="{i18n>comments}" labelFor="inputSalario"/>
@@ -18,7 +19,7 @@
         </f:SimpleForm>
     </content>
     <beginButton>
-        <Button text="{i18n>ascenderAceptar}" press="ascenderAceptar"/>
+        <Button id="btnAscAceptar" enabled="false" text="{i18n>ascenderAceptar}" press="ascenderAceptar"/>
     </beginButton>    
     <endButton>        
         <Button text="{i18n>ascenderCancelar}" press="ascenderCancelar"/>
